@@ -64,7 +64,6 @@ export PATH=$PATH:"$SCALA_HOME/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
-source ~/functions.sh
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
