@@ -1,0 +1,17 @@
+vim
+===
+
+Plug needs to be there automatically, so we can install plugins from vimrc
+Is the vim folder with all plugins also possible and makes sense?
+
+tmux
+====
+
+Is the tmux folder with all plugins needed or could i omit it and install
+plugins from config then
+
+Setup
+=====
+
+Create a setup script to setup other stuff, like e.g. extended installations
+and downloads.
