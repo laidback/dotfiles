@@ -12,7 +12,6 @@ set colorcolumn=80
 set history=1000
 set showmode
 set showcmd
-set hidden
 set wildmenu
 set wildmode=list:longest
 set wildignorecase
@@ -44,49 +43,76 @@ let mapleader = "\<Space>"
 inoremap jk <Esc>
 nnoremap ; :
 
-" Navigation
-" setup homerow navigation for windows
+" --- Navigation Start
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-t> :tabnext<CR>
 
+" Move normally between wrapped lines
 nmap j gj
 nmap k gk
 
+" Buffer navigation
+set hidden
+nmap <Leader>T :enew<CR>
+nmap <Leader>l :bnext<CR>
+nmap <Leader>h :bprevious<CR>
+nmap <Leader>bl :ls<CR>
+" --- Navigation End
+
+" Useful shortcuts
+command Wd :write|bdelete
+
 " --- Plugins Start
 call plug#begin('~/.vim/plugged')
-Plug 'gmarik/Vundle.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-eunuch'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'edkolev/tmuxline.vim'
+Plug 'saltstack/salt-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'derekwyatt/vim-scala'
 Plug 'derekwyatt/vim-sbt'
 Plug 'stephpy/vim-yaml'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'edkolev/tmuxline.vim'
-Plug 'saltstack/salt-vim'
-Plug 'altercation/vim-colors-solarized'
+" Colors
 Plug 'xoria256.vim'
 Plug 'burnttoast256'
-call plug#end() 
+Plug 'tomasr/molokai'
+Plug 'kamwitsta/nordisk'
+Plug 'altercation/vim-colors-solarized'
+call plug#end()
 " --- Plugins End
 
-syntax enable 
+syntax enable
 filetype indent plugin on     " required
 
-" Color settings
+autocmd BufReadPre,FileReadPre *.md :set wrap
+
+" Resize splits when resizing window
+autocmd VimResized * wincmd = 
+
+" --- Color settings
+set t_ut=
 set t_Co=256
 set background=dark
 colorscheme xoria256 
-highlight ColorColumn ctermbg=DarkGrey guibg=DarkGrey
+" after the colorscheme to change the colorscheme default
+highlight ColorColumn ctermbg=DarkGrey guibg=DarkGrey       
 
 " Airline settings
 " install patched gnome-termianl fonts for powerline symbols
 let g:airline_powerline_fonts=1
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme='papercolor'
 
 " Nerdtree settings
@@ -97,5 +123,7 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 nnoremap <Leader>n :NERDTreeToggle<Enter>
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
 
+" Might be some kind of important, don't you think?
+"let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
