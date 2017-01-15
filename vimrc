@@ -63,7 +63,7 @@ nmap <Leader>bl :ls<CR>
 " --- Navigation End
 
 " Useful shortcuts
-command Wd :write|bdelete
+command! Wd :write|bdelete
 
 " --- Plugins Start
 call plug#begin('~/.vim/plugged')
@@ -118,8 +118,9 @@ let g:airline_theme='papercolor'
 
 " Nerdtree settings
 autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" Disable NERDTree here, instead i will use startify
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 nnoremap <Leader>n :NERDTreeToggle<Enter>
 nnoremap <silent> <Leader>v :NERDTreeFind<CR>
