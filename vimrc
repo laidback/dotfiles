@@ -63,7 +63,7 @@ nmap <Leader>bl :ls<CR>
 " --- Navigation End
 
 " Useful shortcuts
-command Wd :write|bdelete
+command! Wd :write|bdelete
 
 " --- Plugins Start
 call plug#begin('~/.vim/plugged')
