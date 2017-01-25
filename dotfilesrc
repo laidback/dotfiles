@@ -3,4 +3,5 @@ ignore = [
     '.git',
     '.gitignore',
     '*.swp',
-    '*.swo']
+    '*.swo',
+    'oh-my-zsh']
