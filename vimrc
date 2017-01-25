@@ -118,6 +118,7 @@ let g:airline_theme='papercolor'
 
 " Nerdtree settings
 autocmd StdinReadPre * let s:std_in=1
+" Disable NERDTree here, instead i will use startify
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
