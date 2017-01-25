@@ -24,6 +24,7 @@ plugins+=(zsh-completions)
 plugins+=(vagrant)
 plugins+=(pip)
 plugins+=(k)
+plugins+=(zsh-completions)
 autoload -U compinit && compinit
 
 # User configuration
