@@ -19,11 +19,21 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git tmux)
-plugins+=(zsh-completions)
+plugins=(zsh-completions)
+plugins+=(cargo)
+plugins+=(ubuntu)
+plugins+=(git)
+plugins+=(go)
+plugins+=(nmap)
+plugins+=(python)
+plugins+=(rsync)
+plugins+=(rust)
+plugins+=(sbt)
+plugins+=(scala)
+plugins+=(ssh-agent)
+plugins+=(systemd)
+plugins+=(tmux)
 plugins+=(vagrant)
-plugins+=(pip)
-plugins+=(k)
 autoload -U compinit && compinit
 
 # User configuration
@@ -33,21 +43,19 @@ bindkey -M viins 'jj' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
 
 export SCALA_HOME="/usr/local/share/scala"
-export PATH=$PATH:"$SCALA_HOME/bin"
-
-#export SCALA_HOME=
+#export ACTIVATOR_HOME=
 #export SBT_HOME=
 #export JAVA_HOME=
 #export RUST=
-
+export GOPATH=/usr/local/go
 export GOROOT=/usr/lib/go
-export GOPATH=$GOROOT/bin
-#export PATH=$PATH:"$SCALA_HOME/bin"
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 export PATH=$PATH:"/opt/activator"
 export PATH=$PATH:"/opt/ssllabs-scan"
 export PATH=$PATH:"/opt/idea-CE/bin"
+export PATH=$PATH:"$SCALA_HOME/bin"
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 source $ZSH/oh-my-zsh.sh
 
