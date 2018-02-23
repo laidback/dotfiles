@@ -69,24 +69,14 @@ command! Wd :write|bdelete
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-obsession'
-Plug 'tpope/vim-eunuch'
 Plug 'mhinz/vim-startify'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'edkolev/tmuxline.vim'
-Plug 'saltstack/salt-vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'derekwyatt/vim-scala'
-Plug 'derekwyatt/vim-sbt'
 Plug 'stephpy/vim-yaml'
 " Colors
-Plug 'xoria256.vim'
-Plug 'burnttoast256'
-Plug 'tomasr/molokai'
-Plug 'kamwitsta/nordisk'
-Plug 'altercation/vim-colors-solarized'
+Plug 'vim-scripts/xoria256.vim'
 call plug#end()
 " --- Plugins End
 

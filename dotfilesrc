@@ -1,7 +1,0 @@
-[dotfiles]
-ignore = [
-    '.git',
-    '.gitignore',
-    '*.swp',
-    '*.swo',
-    'oh-my-zsh']
