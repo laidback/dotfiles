@@ -13,7 +13,6 @@ eval my_lightblue='$FG[105]'
 if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="green"; fi
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
 
-#$FG[214]%m{$reset_color%} $FG[032]%~\
 # primary prompt
 PROMPT='$my_gray------------------------------------------------------------%{$reset_color%}
 $my_orange%m%{$reset_color%} $my_blue%~\
