@@ -1,49 +1,72 @@
-set nocompatible              " be iMproved, required
+set nocompatible            " be iMproved, required
 
-set shell=/bin/zsh
-set encoding=utf-8
-set modeline
-set modelines=1
+" General settings
+set shell=/bin/zsh          " Default shell
+set encoding=utf-8          " Default file encoding
+set fileformat=unix         " Default file format (line endings)
+set modeline                " Use files modeline for vim settings
+set modelines=1             " Number of lines to check for set commands
+set mouse=a
 
-set guicursor=a:blinkon0
-set number
-set cursorline
-set colorcolumn=80
-set history=1000
-set showmode
-set showcmd
-set wildmenu
-set wildmode=list:longest
-set wildignorecase
-set smartcase
-set ignorecase
-set nolist
+" Vim basic look and feel
+"set guicursor=a:blinkon0    " Gui cursor look and feel
+set number                  " Show line numbers
+set ruler
+set cursorline              " Show visible Cursorline
+set colorcolumn=80          " Show visible ColorColumn
+set history=1000            " Set vim history size
+set noshowmode              " Show current vim mode (Insert, Replace, Visual) Airline
+set showcmd                 " Show command in the last line of the screen
+set wildmenu                " Enhanced completion capabilities
+set wildmode=longest:list   " Complete longest string, then list alternatives
+set wildignorecase          " Ignore case when searching completion
+set smartcase               " Only ignore case when all letters are lowercase
+set ignorecase              " Ignore case in search
+set nolist                  " Do not show line end character, tabs and spaces
 
 " Indentation
-set linebreak
-set nowrap
-set autoindent
-set smartindent
-set smarttab
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-set expandtab
+set nolinebreak             " No Break lines when appropriate
+set nowrap                  " Do not wrap long lines
+set autoindent              " Autoindent based on previous line
+set smartindent             " Smart autoindenting on new line
+set smarttab                " Respect space/tab settings
+set shiftwidth=4            " Use four spaces for autoindent
+set softtabstop=4           " Use four spaces for soft tabs
+set tabstop=4               " Use four spaces for hard tabs
+set expandtab               " Tab key inserts spaces
 
 " Swapfiles and Fileload
-set autoread
-set noswapfile
-set nobackup
-set nowb
+set autoread                " Automatically read a changed file
+set noswapfile              " Do not write a swapfile
+set nobackup                " Do not write a backup
+set nowb                    " Do not write a backup / nowritebackup
 
+" Code folding
+set foldmethod=indent       " Fold based on indent
+set foldnestmax=10          " Deepest fold is 10 levels
+set nofoldenable            " Don't fold by default
+set foldlevel=1             " Default fold level
+
+" Clipboard
+set clipboard=unnamed       " Use system clipboard
+
+syntax enable               " Enable syntax highlighting
 syntax on
 
+" --------------
 " Leader and Esc
+" --------------
 let mapleader = "\<Space>"
 inoremap jk <Esc>
 nnoremap ; :
 
-" --- Navigation Start
+" Create new line without entering insert mode
+map <Leader>o o<ESC>
+map <Leader>O O<ESC>
+
+" ----------------
+" Navigation Start
+" ----------------
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -60,12 +83,17 @@ nmap <Leader>T :enew<CR>
 nmap <Leader>l :bnext<CR>
 nmap <Leader>h :bprevious<CR>
 nmap <Leader>bl :ls<CR>
+
+" Resize splits when resizing window
+autocmd VimResized * wincmd =
 " --- Navigation End
 
 " Useful shortcuts
 command! Wd :write|bdelete
 
-" --- Plugins Start
+" -------------
+" Plugins Start
+" -------------
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
@@ -78,37 +106,73 @@ Plug 'stephpy/vim-yaml'
 " Colors
 Plug 'vim-scripts/xoria256.vim'
 Plug 'jordwalke/flatlandia'
+Plug 'cocopon/iceberg.vim'
 call plug#end()
 " --- Plugins End
 
+" All Plugins must be added before the following lines
 syntax enable
 filetype indent plugin on     " required
 
+" ---------------------------
+" Filetype specific behaviour
+" ---------------------------
+
+" Reading and loading a Markdown file sets wrap
 autocmd BufReadPre,FileReadPre *.md :set wrap
 
-" Resize splits when resizing window
-autocmd VimResized * wincmd = 
+" Disable markdown folding
+let g:vim_markdown_folding_disabled=1
 
-" --- Color settings
+" Spell check in Markdown files
+"autocmd FileType markdown setlocal spell
+
+augroup yaml
+    autocmd!
+    autocmd FileType yaml setlocal tabstop=2 shiftwidth=2
+augroup END
+
+augroup json
+    autocmd!
+    autocmd FileType json setlocal tabstop=2 shiftwidth=2
+augroup END
+" --- Filetype specific End
+
+" ------------------------
+" Color and Theme settings
+" ------------------------
 set t_ut=
 set t_Co=256
 set background=dark
-colorscheme flatlandia
-" after the colorscheme to change the colorscheme default
-highlight ColorColumn ctermbg=DarkGrey guibg=DarkGrey       
+colorscheme iceberg
+
+" set highlight after the colorscheme to override colorscheme settings
+" highlight ColorColumn ctermbg=DarkGrey guibg=DarkGrey     " not with iceberg
 highlight CursorLine ctermbg=235 guibg=235
 
+" ----------------
 " Airline settings
+" ----------------
 " install patched gnome-termianl fonts for powerline symbols
+"if !has('gui_running') && !has('win32')
+"    let g:airline_powerline_fonts=1
+"endif
 let g:airline_powerline_fonts=1
+set laststatus=2
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_theme='papercolor'
+let g:airline#extensions#branch#enabled=1
+let g:airline#extensions#branch#empty_message='no repo'
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#fnamemod=':t'
+"let g:airline#extensions#tmuxline#enabled=1
+"let airline#extensions#tmuxline#snapshot_file="~/.tmux.airline.conf"
+let g:airline_theme='iceberg'
 
+" -----------------
 " Nerdtree settings
+" -----------------
 autocmd StdinReadPre * let s:std_in=1
 " Disable NERDTree here, instead i will use startify
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif

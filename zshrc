@@ -74,7 +74,7 @@ source <(minishift completion zsh)
 
 # Activate vim bindings
 bindkey -v
-bindkey -M viins 'jj' vi-cmd-mode
+bindkey -M viins 'jk' vi-cmd-mode
 #bindkey '^R' history-incremental-search-backward
 
 # Exports and Paths
@@ -89,17 +89,17 @@ export LC_ALL=en_US.UTF-8
 export EDITOR='vim'
 
 # homes and bins and paths
-#export SCALA_HOME="/usr/local/share/scala"                                         
-#export PATH=$PATH:"$SCALA_HOME/bin"                                                
-#export SBT_HOME=                                                                  
+#export SCALA_HOME="/usr/local/share/scala"
+#export PATH=$PATH:"$SCALA_HOME/bin"
+#export SBT_HOME=
 #export PATH=$PATH:$SBT_HOME
-#export JAVA_HOME=                                                                 
-#export RUST=                                                                      
+#export JAVA_HOME=
+#export RUST=
 export GOPATH=~/repositories/go
-#export GOROOT=/usr/lib/go                                                          
-#export PATH=$PATH:$GOROOT/bin:$GOPATH/bin                                          
-                                                                                   
-# paths                                                                            
+#export GOROOT=/usr/lib/go
+#export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+# paths
 #export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 #export PATH=$PATH:"/opt/ssllabs-scan"                                                                                                                         
 #export PATH=$PATH:"/opt/idea-CE/bin"                                               
@@ -110,15 +110,15 @@ alias ghe-refresh="adp-2fa cookie \
     --offline_token ~/.git/adp-secrets/offline.token \
     --access_token ~/.git/adp-secrets/access.token"
 
-autoload -U compinit && compinit             
+autoload -U compinit && compinit -u
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Performance ----------------------------------------------------------------- 
-# recompile if needed                                                           
-autoload -U zrecompile && zrecompile -p ~/.{zcompdump,zshrc} > /dev/null 2>&1   
-# ----------------------------------------------------------------------------- 
+#
+# Performance -----------------------------------------------------------------
+# recompile if needed
+autoload -U zrecompile && zrecompile -p ~/.{zcompdump,zshrc} > /dev/null 2>&1
+# -----------------------------------------------------------------------------
