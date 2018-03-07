@@ -7,7 +7,7 @@ export ZSH=/Users/lukas.ciszewski/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="af-magic"
+ZSH_THEME="lc-magic"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -52,7 +52,7 @@ ZSH_THEME="af-magic"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_CUSTOM=~/dotfiles/oh-my-zsh-custom
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -61,6 +61,7 @@ ZSH_THEME="af-magic"
 plugins=(
   git
   oc
+  cf
   vi-mode
   vim-interaction
 )
@@ -68,6 +69,8 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+source <(oc completion zsh)
+source <(minishift completion zsh)
 
 # Activate vim bindings
 bindkey -v
@@ -92,7 +95,7 @@ export EDITOR='vim'
 #export PATH=$PATH:$SBT_HOME
 #export JAVA_HOME=                                                                 
 #export RUST=                                                                      
-#export GOPATH=~/repositories/go
+export GOPATH=~/repositories/go
 #export GOROOT=/usr/lib/go                                                          
 #export PATH=$PATH:$GOROOT/bin:$GOPATH/bin                                          
                                                                                    
@@ -100,7 +103,13 @@ export EDITOR='vim'
 #export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 #export PATH=$PATH:"/opt/ssllabs-scan"                                                                                                                         
 #export PATH=$PATH:"/opt/idea-CE/bin"                                               
-                                                                                   
+
+# Aliases
+alias ghe-refresh="adp-2fa cookie \
+    --global \
+    --offline_token ~/.git/adp-secrets/offline.token \
+    --access_token ~/.git/adp-secrets/access.token"
+
 autoload -U compinit && compinit             
 
 # Compilation flags

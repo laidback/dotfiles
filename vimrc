@@ -77,6 +77,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'stephpy/vim-yaml'
 " Colors
 Plug 'vim-scripts/xoria256.vim'
+Plug 'jordwalke/flatlandia'
 call plug#end()
 " --- Plugins End
 
@@ -92,9 +93,10 @@ autocmd VimResized * wincmd =
 set t_ut=
 set t_Co=256
 set background=dark
-colorscheme xoria256 
+colorscheme flatlandia
 " after the colorscheme to change the colorscheme default
 highlight ColorColumn ctermbg=DarkGrey guibg=DarkGrey       
+highlight CursorLine ctermbg=235 guibg=235
 
 " Airline settings
 " install patched gnome-termianl fonts for powerline symbols
