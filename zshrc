@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/lukas.ciszewski/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -87,6 +87,7 @@ export LC_ALL=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 export EDITOR='vim'
+export TERM=xterm-256color
 
 # homes and bins and paths
 #export SCALA_HOME="/usr/local/share/scala"
