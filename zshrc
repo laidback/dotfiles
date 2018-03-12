@@ -117,11 +117,15 @@ export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
 #export PATH=$PATH:"/opt/idea-CE/bin"                                               
 
 # Aliases
+# Somehow tmux does not set the colors right, so we simply force it to use 256 colors
+# @see: https://unix.stackexchange.com/questions/1045/getting-256-colors-to-work-in-tmux
+alias tmux="tmux -2"
+
+# Github needs the 2FA Auth
 alias ghe-refresh="adp-2fa cookie \
     --global \
     --offline_token ~/.git/adp-secrets/offline.token \
     --access_token ~/.git/adp-secrets/access.token"
-
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
