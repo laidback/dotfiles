@@ -143,7 +143,7 @@ augroup END
 " ------------------------
 " set t_ut=
 " t_Co does not work with iceberg
-"set t_Co=256
+" set t_Co=256
 set background=dark
 colorscheme iceberg
 

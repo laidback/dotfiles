@@ -95,7 +95,7 @@ export LC_ALL=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 export EDITOR='vim'
-export TERM=xterm-256color
+export TERM=xterm-color
 
 # homes and bins and paths
 # to use scala with IntelliJ, set SCALA_HOME to
