@@ -141,13 +141,14 @@ augroup END
 " ------------------------
 " Color and Theme settings
 " ------------------------
-set t_ut=
-set t_Co=256
+" set t_ut=
+" t_Co does not work with iceberg
+"set t_Co=256
 set background=dark
 colorscheme iceberg
 
 " set highlight after the colorscheme to override colorscheme settings
-" highlight ColorColumn ctermbg=DarkGrey guibg=DarkGrey     " not with iceberg
+highlight ColorColumn ctermbg=DarkGrey guibg=DarkGrey
 highlight CursorLine ctermbg=235 guibg=235
 
 " ----------------
@@ -166,8 +167,8 @@ let g:airline#extensions#branch#enabled=1
 let g:airline#extensions#branch#empty_message='no repo'
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#fnamemod=':t'
-"let g:airline#extensions#tmuxline#enabled=1
-"let airline#extensions#tmuxline#snapshot_file="~/.tmux.airline.conf"
+let g:airline#extensions#tmuxline#enabled=1
+let airline#extensions#tmuxline#snapshot_file="~/.tmux.airline.conf"
 let g:airline_theme='iceberg'
 
 " -----------------

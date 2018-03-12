@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/lukas.ciszewski/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -52,25 +52,33 @@ ZSH_THEME="lc-magic"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=~/dotfiles/oh-my-zsh-custom
+ZSH_CUSTOM="$HOME/dotfiles/oh-my-zsh-custom"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-  oc
-  cf
-  vi-mode
-  vim-interaction
-)
+plugins=(git)
+plugins+=(vi-mode)
+#plugins+=(vim-interaction)
+plugins+=(oc)
+#plugins+=(kubectl)
+#plugins+=(cf)
+#plugins+=(go)
+#plugins+=(sbt)
+#plugins+=(scala)
+#plugins+=(pip)
+#plugins+=(python)
+#plugins+=(jsontool)
+plugins+=(ssh-agent)
+plugins+=(gpg-agent)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-source <(oc completion zsh)
-source <(minishift completion zsh)
+command -v oc > /dev/null 2>&1 && source <(oc completion zsh)
+command -v minishift > /dev/null 2>&1 && source <(minishift completion zsh)
+command -v helm > /dev/null 2>&1 && source <(helm completion zsh)
 
 # Activate vim bindings
 bindkey -v
@@ -89,15 +97,18 @@ export LC_ALL=en_US.UTF-8
 export EDITOR='vim'
 
 # homes and bins and paths
-#export SCALA_HOME="/usr/local/share/scala"
-#export PATH=$PATH:"$SCALA_HOME/bin"
-#export SBT_HOME=
-#export PATH=$PATH:$SBT_HOME
-#export JAVA_HOME=
+# to use scala with IntelliJ, set SCALA_HOME to
+# export SCALA_HOME="/usr/local/opt/scala/idea"
+export SCALA_HOME="/usr/local/opt/scala"
+export PATH="$PATH:$SCALA_HOME/bin"
+export SBT_HOME="/usr/local/opt/sbt"
+export PATH="$PATH:$SBT_HOME/bin"
+export JAVA_HOME="/usr/libexec/java_home --version 9"
+export PATH="$PATH:$JAVA_HOME/bin"
+export GOPATH="$HOME/repositories/go"
+export GOROOT="/usr/local/go"
+export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
 #export RUST=
-export GOPATH=~/repositories/go
-#export GOROOT=/usr/lib/go
-#export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # paths
 #export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
@@ -110,7 +121,6 @@ alias ghe-refresh="adp-2fa cookie \
     --offline_token ~/.git/adp-secrets/offline.token \
     --access_token ~/.git/adp-secrets/access.token"
 
-autoload -U compinit && compinit -u
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -120,5 +130,9 @@ autoload -U compinit && compinit -u
 #
 # Performance -----------------------------------------------------------------
 # recompile if needed
+autoload -U compinit && compinit -u
 autoload -U zrecompile && zrecompile -p ~/.{zcompdump,zshrc} > /dev/null 2>&1
 # -----------------------------------------------------------------------------
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
