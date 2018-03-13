@@ -145,6 +145,7 @@ augroup END
 " t_Co does not work with iceberg
 " set t_Co=256
 set background=dark
+" colorscheme flatlandia 
 colorscheme iceberg
 
 " set highlight after the colorscheme to override colorscheme settings
@@ -158,7 +159,12 @@ highlight CursorLine ctermbg=235 guibg=235
 "if !has('gui_running') && !has('win32')
 "    let g:airline_powerline_fonts=1
 "endif
-let g:airline_powerline_fonts=1
+" let g:airline_powerline_fonts=1
+
+let g:airline_symbols_ascii=1
+let g:airline_left_sep='|'
+let g:airline_right_sep='|'
+
 set laststatus=2
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}

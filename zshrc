@@ -113,8 +113,8 @@ export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
 
 # paths
 #export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-#export PATH=$PATH:"/opt/ssllabs-scan"                                                                                                                         
-#export PATH=$PATH:"/opt/idea-CE/bin"                                               
+#export PATH=$PATH:"/opt/ssllabs-scan"
+#export PATH=$PATH:"/opt/idea-CE/bin"
 
 # Aliases
 # Somehow tmux does not set the colors right, so we simply force it to use 256 colors
