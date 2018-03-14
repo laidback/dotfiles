@@ -60,6 +60,7 @@ ZSH_CUSTOM="$HOME/dotfiles/oh-my-zsh-custom"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 plugins+=(vi-mode)
+plugins+=(virtualenv)
 #plugins+=(vim-interaction)
 plugins+=(oc)
 #plugins+=(kubectl)

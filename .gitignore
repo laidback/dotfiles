@@ -1,5 +1,14 @@
+# Ignore temp files
 *.swp
 *.swo
 *.old
-/vim/plugged/*
-/tmux
+*.bak
+
+# Ignore vim plugin directory
+vim/plugged/*
+
+# Ignore all structures in venv directory
+venvs/*
+
+# Allow only venvs regarding my public repos
+!venvs/github.com
