@@ -12,3 +12,4 @@ venvs/*
 
 # Allow only venvs regarding my public repos
 !venvs/github.com
+install_shell_integration_and_utilities.sh

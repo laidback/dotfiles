@@ -27,7 +27,7 @@ RPS1='${return_code}'
 if [ $UID -eq 0 ]; then NCOLOR=$my_red; else NCOLOR=$my_green; fi
 if type "virtualenv_prompt_info" > /dev/null
 then
-	RPROMPT='$(virtualenv_prompt_info)$NCOLOR%n@%m%{$reset_color%}%'
+	RPROMPT='$my_orange$(virtualenv_prompt_info)$NCOLOR%n@%m%{$reset_color%}%'
 else
 	RPROMPT='$NCOLOR%n@%m%{$reset_color%}%'
 fi
