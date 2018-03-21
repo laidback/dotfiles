@@ -100,6 +100,7 @@ Plug 'scrooloose/syntastic'
 Plug 'mhinz/vim-startify'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'edkolev/tmuxline.vim'
+Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'stephpy/vim-yaml'
@@ -142,11 +143,11 @@ augroup END
 " Color and Theme settings
 " ------------------------
 " set t_ut=
-" t_Co does not work with iceberg
-" set t_Co=256
 set background=dark
-" colorscheme flatlandia 
+"colorscheme flatlandia
 colorscheme iceberg
+set t_Co=256
+" Important to set t_Co after colorscheme
 
 " set highlight after the colorscheme to override colorscheme settings
 highlight ColorColumn ctermbg=DarkGrey guibg=DarkGrey
@@ -159,7 +160,6 @@ highlight CursorLine ctermbg=235 guibg=235
 "if !has('gui_running') && !has('win32')
 "    let g:airline_powerline_fonts=1
 "endif
-" let g:airline_powerline_fonts=1
 
 let g:airline_symbols_ascii=1
 let g:airline_left_sep='|'
@@ -174,7 +174,8 @@ let g:airline#extensions#branch#empty_message='no repo'
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#fnamemod=':t'
 let g:airline#extensions#tmuxline#enabled=1
-let airline#extensions#tmuxline#snapshot_file="~/.tmux.airline.conf"
+let g:tmuxline_powerline_separators=0
+let g:airline#extensions#tmuxline#snapshot="~/.tmux.airline.conf"
 let g:airline_theme='iceberg'
 
 " -----------------
