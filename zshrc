@@ -63,7 +63,7 @@ plugins+=(vi-mode)
 #plugins+=(vim-interaction)
 plugins+=(oc)
 #plugins+=(kubectl)
-#plugins+=(cf)
+plugins+=(cf)
 #plugins+=(go)
 #plugins+=(sbt)
 #plugins+=(scala)
@@ -110,8 +110,8 @@ export PATH="$PATH:$JAVA_HOME/bin"
 export GOPATH="$HOME/repositories/go"
 export GOROOT="/usr/local/go"
 export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
-#export RUST=
-
+export ISTIO_HOME="/Users/lukas.ciszewski/istio-0.6.0"
+export PATH="$PATH:$ISTIO_HOME/bin"
 # paths
 #export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 #export PATH=$PATH:"/opt/ssllabs-scan"

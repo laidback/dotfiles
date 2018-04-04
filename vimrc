@@ -150,8 +150,8 @@ set t_Co=256
 " Important to set t_Co after colorscheme
 
 " set highlight after the colorscheme to override colorscheme settings
-highlight ColorColumn ctermbg=DarkGrey guibg=DarkGrey
-highlight CursorLine ctermbg=235 guibg=235
+highlight ColorColumn ctermbg=235 guibg=235
+highlight CursorLine term=bold cterm=bold ctermbg=235 guibg=235
 
 " ----------------
 " Airline settings
