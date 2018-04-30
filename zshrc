@@ -50,6 +50,7 @@ ZSH_THEME="lc-magic"
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
+unsetopt share_history
 
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM="$HOME/dotfiles/oh-my-zsh-custom"
@@ -60,19 +61,15 @@ ZSH_CUSTOM="$HOME/dotfiles/oh-my-zsh-custom"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 plugins+=(vi-mode)
-#plugins+=(vim-interaction)
 plugins+=(oc)
 #plugins+=(kubectl)
-plugins+=(cf)
+#plugins+=(cf)
 #plugins+=(go)
 #plugins+=(sbt)
 #plugins+=(scala)
 plugins+=(pip)
 plugins+=(python)
-plugins+=(virtualenv)
-#plugins+=(jsontool)
 plugins+=(ssh-agent)
-plugins+=(gpg-agent)
 
 source $ZSH/oh-my-zsh.sh
 
