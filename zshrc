@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+fpath=(/usr/local/share/zsh $fpath)
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -61,22 +63,22 @@ ZSH_CUSTOM="$HOME/dotfiles/oh-my-zsh-custom"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 plugins+=(vi-mode)
-plugins+=(oc)
-#plugins+=(kubectl)
+plugins+=(ssh-agent)
 #plugins+=(cf)
-#plugins+=(go)
+plugins+=(go)
 #plugins+=(sbt)
 #plugins+=(scala)
-plugins+=(pip)
-plugins+=(python)
-plugins+=(ssh-agent)
+#plugins+=(pip)
+#plugins+=(python)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 command -v oc > /dev/null 2>&1 && source <(oc completion zsh)
 command -v minishift > /dev/null 2>&1 && source <(minishift completion zsh)
+command -v kubectl > /dev/null 2>&1 && source <(kubectl completion zsh)
 command -v helm > /dev/null 2>&1 && source <(helm completion zsh)
+command -v gopass > /dev/null 2>&1 && source <(gopass completion zsh)
 
 # Activate vim bindings
 bindkey -v
@@ -102,8 +104,8 @@ export SCALA_HOME="/usr/local/opt/scala"
 export PATH="$PATH:$SCALA_HOME/bin"
 export SBT_HOME="/usr/local/opt/sbt"
 export PATH="$PATH:$SBT_HOME/bin"
-export JAVA_HOME="/usr/libexec/java_home --version 9"
-export PATH="$PATH:$JAVA_HOME/bin"
+export JAVA_HOME="$(/usr/libexec/java_home --version 9)"
+export PATH="$PATH:${JAVA_HOME}/bin"
 export GOPATH="$HOME/repositories/go"
 export GOROOT="/usr/local/go"
 export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
