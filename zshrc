@@ -113,7 +113,7 @@ fi
 export GOPATH="$HOME/repositories/go"
 export GOROOT="/usr/local/go"
 export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
-export ISTIO_HOME="/Users/lukas.ciszewski/istio-0.6.0"
+export ISTIO_HOME="~/istio-0.6.0"
 export PATH="$PATH:$ISTIO_HOME/bin"
 # paths
 #export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
