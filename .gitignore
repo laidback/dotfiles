@@ -6,10 +6,9 @@
 
 # Ignore vim plugin directory
 vim/plugged/*
+!vim/plugged/.gitkeep
 
 # Ignore all structures in venv directory
 venvs/*
 
-# Allow only venvs regarding my public repos
-!venvs/github.com
 install_shell_integration_and_utilities.sh
