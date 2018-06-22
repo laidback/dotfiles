@@ -214,7 +214,7 @@ let g:airline#extensions#tabline#enabled=0
 let g:airline#extensions#tabline#fnamemod=':t'
 let g:airline#extensions#tmuxline#enabled=1
 let g:tmuxline_powerline_separators=0
-let g:airline#extensions#tmuxline#snapshot="~/.tmux.airline.conf"
+let g:airline#extensions#tmuxline#snapshot="~/.tmux/tmux.airline.conf"
 let g:airline_theme='simple'
 
 " -----------------

@@ -104,8 +104,12 @@ export SCALA_HOME="/usr/local/opt/scala"
 export PATH="$PATH:$SCALA_HOME/bin"
 export SBT_HOME="/usr/local/opt/sbt"
 export PATH="$PATH:$SBT_HOME/bin"
-export JAVA_HOME="$(/usr/libexec/java_home --version 9)"
-export PATH="$PATH:${JAVA_HOME}/bin"
+
+if [[ -f /usr/libexec/java_home ]]; then
+    export JAVA_HOME="$(/usr/libexec/java_home --version 9)"
+    export PATH="$PATH:${JAVA_HOME}/bin"
+fi
+
 export GOPATH="$HOME/repositories/go"
 export GOROOT="/usr/local/go"
 export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
