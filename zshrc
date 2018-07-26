@@ -125,6 +125,8 @@ export PATH="$PATH:$ISTIO_HOME/bin"
 # @see: https://unix.stackexchange.com/questions/1045/getting-256-colors-to-work-in-tmux
 alias tmux="tmux -2"
 
+alias pwd="pwd -P"
+
 # Github needs the 2FA Auth
 alias ghe-refresh="adp-2fa cookie \
     --global \
