@@ -5,7 +5,7 @@ set -o errtrace
 set -o nounset
 set -o pipefail
 
-apt update && apt-upgrade -y
+apt update && apt upgrade -y
 
 # This installation is for the win 10 subsystem
 # Should do no harm on real linux
