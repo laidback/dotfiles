@@ -24,7 +24,9 @@ mkdir -p ~/repositories/github.com/laidback
 mkdir -p ~/repositories/go/{src,pkg,bin}
 
 # Manual golang install
-tar -C /usr/local -xzf go1.10.3.linux-amd64.tar.gz
+GOVERS=go1.10.3.linux-amd64.tar.gz
+curl -fsSL https://dl.google.com/go/$GOVERS $GOVERS 
+tar -C /usr/local -xzf $GOVERS
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
 export GOPATH=~/repositories/go
