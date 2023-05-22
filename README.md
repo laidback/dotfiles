@@ -1,33 +1,22 @@
 # Dotfiles
 
+Update ... we go back to the important things and modernize the dotfiles.
+The stack is easier to get and also the configs got more sophisticated.
+
 ## Install
 
 * clone this repo e.g. to your repositories directory
 * softlink it to your home
 * softlink dotfiles into your home dir
 
-### Oh-my-zsh
+### Other stuff to install
 
-[https://github.com/robbyrussell/oh-my-zsh]
-
-* install oh-my-zsh as robby russel says into your home
-
-### Powerline
-
-[https://github.com/powerline/fonts]
-
-* install powerline fonts on your machine
-
-### Terminal 
-
-[http://cocopon.github.io/iceberg.vim/]
-
-* install e.g. iceberg or solarized on the system
-* set iceberg as the default terminal scheme
-* set powerline fonts as terminal fonts
-
-### Vim
-
-* install vim plug if needed
-* install all plugins with vim plug
-
+* https://github.com/robbyrussell/oh-my-zsh
+* https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md
+* https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md
+* https://github.com/jeffreytse/zsh-vi-mode
+* https://www.nerdfonts.com/
+* https://starship.rs/
+* https://github.com/VundleVim/Vundle.vim
+* https://github.com/junegunn/vim-plug
+* https://github.com/ajeetdsouza/zoxide
