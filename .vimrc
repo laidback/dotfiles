@@ -1,4 +1,7 @@
 set nocompatible            " be iMproved, required
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
 
 " General settings
 set shell=/bin/zsh          " Default shell
@@ -57,6 +60,9 @@ set nofoldenable            " Don't fold by default
 " Clipboard
 set clipboard=unnamed       " Use system clipboard
 
+" Update sign column second (4000 ms default)
+set updatetime=250
+
 " Fix some unnecessary shift key issues
 if has("user_commands")
     command! -bang -nargs=* -complete=file E e<bang> <args>
@@ -78,7 +84,10 @@ syntax on
 " Leader and Esc
 " --------------
 let mapleader = "\<Space>"
+" exit inoremap-insert mode and exit xnoremap-visual mode
 inoremap jk <Esc>
+xnoremap jk <Esc>
+vnoremap jk <Esc>
 nnoremap ; :
 nnoremap <Leader>r :RunInInteractiveShell<Space>
 
@@ -111,6 +120,9 @@ nmap <Leader>l :bnext<CR>
 nmap <Leader>h :bprevious<CR>
 nmap <Leader>bl :ls<CR>
 
+nmap <Leader>ww :w<CR>
+nmap <Leader>qq :q<CR>
+
 nmap <silent> <leader>/ :nohlsearch<CR>
 nmap <silent> <leader>/ :set invhlsearch<CR>
 
@@ -120,6 +132,14 @@ cmap w!! w !sudo tee % >/dev/null
 " Resize splits when resizing window
 autocmd VimResized * wincmd =
 " --- Navigation End
+
+" -------------
+" Plugins Start
+" -------------
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'ycm-core/YouCompleteMe'
+call vundle#end()
 
 " -------------
 " Plugins Start
@@ -136,12 +156,25 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'stephpy/vim-yaml'
 Plug 'majutsushi/tagbar'
+Plug 'google/vim-jsonnet'
+Plug 'cespare/vim-toml', { 'branch': 'main' }
+Plug 'airblade/vim-gitgutter'
+Plug 'jreybert/vimagit'
+Plug 'tpope/vim-commentary'
 " Colors
 Plug 'vim-scripts/xoria256.vim'
 Plug 'jordwalke/flatlandia'
 Plug 'cocopon/iceberg.vim'
 call plug#end()
 " --- Plugins End
+
+" Hunk-add and hunk-revert for chunk staging
+nmap <Leader>gn <Plug>(GitGutterNextHunk)       " git next (chunk)
+nmap <Leader>gp <Plug>(GitGutterPrevHunk)       " git previous (chunk)
+nmap <Leader>ga <Plug>(GitGutterStageHunk)      " git add (chunk)
+nmap <Leader>gu <Plug>(GitGutterUndoHunk)       " git undo (chunk)
+nmap <Leader>gd <Plug>(GitGutterDiffOriginal)   " git diff (chunk)
+nmap <Leader>gs :Magit<CR>                      " magit tool
 
 " All Plugins must be added before the following lines
 syntax enable
@@ -183,14 +216,14 @@ augroup END
 set background=dark
 "colorscheme flatlandia
 colorscheme iceberg
-set t_Co=256
+"set t_Co=256
 " Important to set t_Co after colorscheme
 
 " set highlight after the colorscheme to override colorscheme settings
-highlight clear LineNr      " Don't use colors on linenumbers except the current
-highlight ColorColumn ctermbg=235 guibg=235
-highlight CursorLine term=bold cterm=bold ctermbg=235 guibg=235
-highlight Folded term=bold cterm=bold ctermbg=235 guibg=235
+highlight LineNr ctermfg=245 ctermbg=235
+highlight ColorColumn ctermbg=235
+highlight CursorLine term=bold cterm=bold ctermbg=235
+highlight Folded term=bold cterm=bold ctermbg=235
 
 " ----------------
 " Airline settings
@@ -240,31 +273,31 @@ let NERDTreeMirror = 1
 nmap <Leader>t :TagbarToggle<CR>
 
 let g:tagbar_type_go = {
-	\ 'ctagstype' : 'go',
-	\ 'kinds'     : [
-		\ 'p:package',
-		\ 'i:imports:1',
-		\ 'c:constants',
-		\ 'v:variables',
-		\ 't:types',
-		\ 'n:interfaces',
-		\ 'w:fields',
-		\ 'e:embedded',
-		\ 'm:methods',
-		\ 'r:constructor',
-		\ 'f:functions'
-	\ ],
-	\ 'sro' : '.',
-	\ 'kind2scope' : {
-		\ 't' : 'ctype',
-		\ 'n' : 'ntype'
-	\ },
-	\ 'scope2kind' : {
-		\ 'ctype' : 't',
-		\ 'ntype' : 'n'
-	\ },
-	\ 'ctagsbin'  : 'gotags',
-	\ 'ctagsargs' : '-sort -silent'
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
 \ }
 
 " -----------------
