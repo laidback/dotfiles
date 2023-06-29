@@ -20,3 +20,14 @@ The stack is easier to get and also the configs got more sophisticated.
 * https://github.com/VundleVim/Vundle.vim
 * https://github.com/junegunn/vim-plug
 * https://github.com/ajeetdsouza/zoxide
+
+### More software
+
+* Docker
+* Podman
+* Python3/Pip
+* AWS cli + completer
+* Kubectl
+
+* Charm and Skate
+
