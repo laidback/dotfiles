@@ -54,11 +54,11 @@ export EDITOR='vim'
 
 # Homes, bins and paths
 # GOLANG
-export GOPATH="$REPO_DIR/go"
+export GOPATH="$HOME/go"
 export GOROOT="/usr/local/go"
 export GOBIN="/usr/local/bin"
 export PATH="$GOROOT/bin:$PATH"
-export PATH="$REPO_DIR/go/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
 
 # JAVA
 #export JAVA_HOME="/usr/lib/jvm/temurin-17-jdk-amd64"
