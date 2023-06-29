@@ -37,12 +37,12 @@ bindkey '^ ' autosuggest-accept # ctrl+space
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 # Load Oh-my-zsh
-ZSH_CUSTOM="$HOME/oh-my-zsh-custom"
+export ZSH_CUSTOM="$HOME/oh-my-zsh-custom"
 source $ZSH/oh-my-zsh.sh
 
 # Tools configuration
 eval "$(zoxide init zsh)"
-#complete -C '/usr/local/bin/aws_completer' aws
+complete -C '/usr/local/bin/aws_completer' aws
 
 # Exports and Paths
 # Preferred global shell settings
