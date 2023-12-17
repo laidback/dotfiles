@@ -93,7 +93,7 @@ test -f $HOME/.vimrc && rm $HOME/.vimrc
 ln -s $DOTFILES/.vimrc $HOME/.vimrc
 
 # compile YouCompleteMe
-python3 .vim/bundle/YouCompleteMe/install.py --all --force-sudo
+python3 $HOME/.vim/bundle/YouCompleteMe/install.py --all --force-sudo
 
 # install Github copilot
 git clone https://github.com/github/copilot.vim.git \
