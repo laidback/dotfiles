@@ -82,18 +82,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-# invoke vim plugin managers
-yes | vim +PlugUpdate +qall
-yes | vim +PluginInstall +qall
-
-echo "Vim installing plugions ..." && sleep 20
-
 # install dotfiles
 test -f $HOME/.vimrc && rm $HOME/.vimrc
 ln -s $DOTFILES/.vimrc $HOME/.vimrc
-
-# compile YouCompleteMe
-python3 $HOME/.vim/bundle/YouCompleteMe/install.py --all --force-sudo
 
 # install Github copilot
 git clone https://github.com/github/copilot.vim.git \
@@ -105,18 +96,23 @@ if [[ "$USER" == "root" ]]; then
     curl -fsSL https://repo.charm.sh/apt/gpg.key | gpg --dearmor -o /etc/apt/keyrings/charm.gpg
     echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | tee /etc/apt/sources.list.d/charm.list
     apt update -y && apt install charm skate mods gum glow
+    charm completion zsh > "${fpath[1]}/_charm"
 fi
-
-charm completion zsh > "${fpath[1]}/_charm"
 
 cat << EOF
     # manual setup needed!!!
     # use vim and issue Copilot setup with device authentication
-    #
+
     # manual setup needed for charm!!!
-    charm cloud setup"
     skate set github.com https://github.com/settings/tokens
     skate set openai.com https://platform.openai.com/api-keys
     export OPENAI_API_KEY=$(skate get lukas@api.openai.com)
+    
+    # invoke vim plugin managers
+    yes | vim +PlugUpdate +qall
+    yes | vim +PluginInstall +qall
+    
+    # compile YouCompleteMe
+    python3 $HOME/.vim/bundle/YouCompleteMe/install.py --all --force-sudo
 EOF
 
