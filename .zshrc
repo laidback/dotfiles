@@ -51,13 +51,16 @@ export TERM=xterm-256color
 export EDITOR='vim'
 
 # Homes, bins and paths
-# GOLANG
+# Golang
 export GOROOT="/usr/local/go"
 export GOPATH="$HOME/repos/go"
+
+# PATH
 export PATH="$GOROOT/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-# JAVA
+# Java
 #export JAVA_HOME="/usr/lib/jvm/temurin-17-jdk-amd64"
 #export PATH="$PATH:${JAVA_HOME}/bin"
 
@@ -70,7 +73,7 @@ export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
 export PATH="${PATH}:${HOME}/.krew/bin"
 
 # Kubernetes PATH settings
-export KUBECONFIG="${HOME}/.kube/wfm-dev"
+export KUBECONFIG="${HOME}/.kube/kind"
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
@@ -160,5 +163,12 @@ autoload -U zrecompile && zrecompile -p ~/.{zcompdump,zshrc} > /dev/null 2>&1
 # -----------------------------------------------------------------------------
 
 eval "$(starship init zsh)"
+
+# source completions for cli tools
+. <(kubectl completion zsh)
+. <(helm completion zsh)
+. <(charm completion zsh)
+. <(flux completion zsh)
+. <(stern --completion zsh)
 
 # vim: ts=4 sw=4 sws=4 expandtab

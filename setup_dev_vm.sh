@@ -105,6 +105,8 @@ if [[ "$USER" == "root" ]]; then
     apt update -y && apt install charm skate mods gum glow
 fi
 
+charm completion zsh > "${fpath[1]}/_charm"
+
 cat << EOF
     # manual setup needed!!!
     # use vim and issue Copilot setup with device authentication

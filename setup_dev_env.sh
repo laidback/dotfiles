@@ -6,9 +6,10 @@ if [[ "$USER" == "root" ]]; then
 
     # Add Docker's official GPG key:
     apt-get update
-    apt-get install ca-certificates curl gnupg
+    apt-get install ca-certificates curl gnupg -y
     install -m 0755 -d /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+        | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     chmod a+r /etc/apt/keyrings/docker.gpg
 
     # Add the repository to Apt sources:
@@ -17,14 +18,51 @@ if [[ "$USER" == "root" ]]; then
         $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
         tee /etc/apt/sources.list.d/docker.list > /dev/null
     apt-get update
-    apt-get install docker-ce docker-ce-cli containerd.io
+    apt-get install docker-ce docker-ce-cli containerd.io -y
+fi
+
+# Install kubectl
+# https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+if [[ "$USER" == "root" ]]; then
+    curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+    apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+    apt-get update
+    apt-get install kubectl -y
+fi
+
+# Install helm via package manager
+if [[ "$USER" == "root" ]]; then
+    curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+    apt-get install apt-transport-https --yes
+    echo "deb [arch=$(dpkg --print-architecture)] https://baltocdn.com/helm/stable/debian/ all main" \
+        | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+    apt-get update
+    apt-get install helm -y
+fi
+
+# Install krew
+# https://krew.sigs.k8s.io/docs/user-guide/setup/install/#zsh
+if [[ "$USER" == "root" ]]; then
+    set -x; cd "$(mktemp -d)" &&
+    OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
+    ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&
+    KREW="krew-${OS}_${ARCH}" &&
+    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
+    tar zxvf "${KREW}.tar.gz" &&
+    ./"${KREW}" install krew
 fi
 
 # Install go tools and packages for the kubernetes ecosystem
 # with kubectl, krew, kubetail, stern, kind and flux
-go install k8s.io/kubectl@latest \
-    sigs.k8s.io/kind@latest \
-    github.com/fluxcd/flux2@latest \
-    stern@latest \
-    kubetail@latest
+go install sigs.k8s.io/kind@latest
+go install github.com/stern/stern@latest
+curl -s https://fluxcd.io/install.sh | sudo bash
+
+# Install aws cli and autocompleter for zsh
+# https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install 
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+rm -rf ./aws
+npm install -g aws-azure-login
 
