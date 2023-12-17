@@ -49,8 +49,6 @@ if [[ "$USER" == "root" ]]; then
 fi
 export PATH=$PATH:/usr/local/go/bin
 
-
-
 # zsh settings
 chsh -s /bin/zsh $USER
 test -f $HOME/.zshrc && rm $HOME/.zshrc
