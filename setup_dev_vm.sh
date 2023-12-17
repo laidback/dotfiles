@@ -48,7 +48,7 @@ export PATH=$PATH:/usr/local/go/bin
 LAIDBACK=github.com/laidback
 DOTFILES=$REPOS/$LAIDBACK/dotfiles
 test -d $DOTFILES && rm -rf $DOTFILES && mkdir -p $DOTFILES
-git clone https://$DOTFILES $DOTFILES
+git clone https://$LAIDBACK/dotfiles $DOTFILES
 
 # zsh settings
 chsh -s /bin/zsh $USER
