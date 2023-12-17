@@ -54,15 +54,23 @@ fi
 
 # Install go tools and packages for the kubernetes ecosystem
 # with kubectl, krew, kubetail, stern, kind and flux
-go install sigs.k8s.io/kind@latest
-go install github.com/stern/stern@latest
-curl -s https://fluxcd.io/install.sh | sudo bash
+if [[ "$USER" == "root" ]]; then
+    go install sigs.k8s.io/kind@latest
+    go install github.com/stern/stern@latest
+    curl -s https://fluxcd.io/install.sh | sudo bash
+fi
 
 # Install aws cli and autocompleter for zsh
 # https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install 
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-rm -rf ./aws
-npm install -g aws-azure-login
+if [[ "$USER" == "root" ]]; then
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+    rm -rf ./aws
+fi
+
+# Install aws-azure-login
+if [[ "$USER" == "root" ]]; then
+    npm install -g aws-azure-login
+fi
 
