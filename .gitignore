@@ -4,6 +4,12 @@
 *.old
 *.bak
 
+# Ignore .config/github-copilot directory
+.config/github-copilot/*
+
+# Ignore oh-my-zsh-custom/plugins directory
+oh-my-zsh-custom/plugins/*
+
 # Ignore vim plugin directory
 vim/plugged/*
 !vim/plugged/.gitkeep
@@ -11,4 +17,3 @@ vim/plugged/*
 # Ignore all structures in venv directory
 venvs/*
 
-install_shell_integration_and_utilities.sh

@@ -1,6 +1,4 @@
 # If you come from bash you might have to change your $PATH.
-export PATH="$HOME/.local/bin:$PATH"
-
 FPATH="/usr/local/share/zsh/site-functions:${FPATH}"
 HISTCONTROL=ignoreboth
 
@@ -54,9 +52,8 @@ export EDITOR='vim'
 
 # Homes, bins and paths
 # GOLANG
-export GOPATH="$HOME/go"
 export GOROOT="/usr/local/go"
-export GOBIN="/usr/local/bin"
+export GOPATH="$HOME/repos/go"
 export PATH="$GOROOT/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 
@@ -74,9 +71,6 @@ export PATH="${PATH}:${HOME}/.krew/bin"
 
 # Kubernetes PATH settings
 export KUBECONFIG="${HOME}/.kube/wfm-dev"
-
-# Terraform env
-export PATH="$HOME/.tfenv/bin:$PATH"
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
@@ -136,39 +130,21 @@ if [[ ${ret} -ne "200" ]]; then
 fi
 
 # Tools setup
-export REPO_DIR="${HOME}/Repos"
-export GITLAB_HOST="git.asmgmt.hilti.com"
-export GITLAB_GROUP="lukas.ciszewski"
-export GITLAB_REPO="lukas.ciszewski/devtools"
-export GITLAB_TOKEN=$(skate get gitlab@prod)
+export REPO_DIR="${HOME}/repos"
+export GITLAB_HOST="git.buts.hilti.cloud"
+export GITLAB_TOKEN=$(skate get git.buts.hilti.cloud)
 export JIRA_AUTH_TYPE=bearer
 export JIRA_API_TOKEN=$(skate get jira.hilti.com)
-
-# Gitlab aliases
-function chhost(){
-    GITLAB_HOST=$(find $REPO_DIR/* -maxdepth 0 -type d -exec basename {} \; | gum choose);
-    cd "$REPO_DIR/$GITLAB_HOST"
-}
-
-function chrepo(){
-    GITLAB_GROUP="${$(dirname $(pwd))#$REPO_DIR/$GITLAB_HOST/}";
-    GITLAB_REPO="$GITLAB_GROUP/$(basename $(pwd))"
-}
+export OPENAI_API_KEY=$(skate get openai.com)
 
 # Zsh addons and functions
 #source "$REPO_DIR/git.asmgmt.hilti.com/lukas.ciszewski/workflow-tools/wft.sh"
 #source "$REPO_DIR/github.com/laidback/workflow-tools/workflow-tools.sh"
 
 # Kube aliases
-alias ktx="export KUBECONFIG=\$(gum file ~/.kube)"
+alias ktx="export KUBECONFIG=\$(find -maxdepth 1 -type f $HOME/.kube | gum choose)"
 alias kns="kubectl config set-context --current=true \
     --namespace=\$(kubectl get namespace | cut -d ' ' -f1 | gum filter)"
-
-# Git aliases
-spiiin="gum spin --spinner dot --title \"Pushing hard\" -- sleep 3"
-alias tadaa="git add . \
-    && git commit -m\$(gum input --prompt 'commit msg') && git push \
-    && eval \${spiiin} && glab ci view"
 
 ### alcoholics
 # Aliases
