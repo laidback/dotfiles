@@ -52,12 +52,12 @@ git clone https://$DOTFILES $DOTFILES
 
 # zsh settings
 chsh -s /bin/zsh $USER
+test -f $HOME/.zshrc && rm $HOME/.zshrc
+ln -s $DOTFILES/.zshrc $HOME/.zshrc
 
 # install oh-my-zsh
 curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh
-test -f $HOME/.zshrc && rm $HOME/.zshrc
-ln -s $DOTFILES/.zshrc $HOME/.zshrc
-ln -s $DOTFILES/oh-my-zsh-custom/themes oh-my-zsh-custom
+ln -s $DOTFILES/oh-my-zsh-custom/ $HOME/oh-my-zsh-custom/
 
 # install plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions \
