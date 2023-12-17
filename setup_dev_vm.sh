@@ -31,7 +31,12 @@ if [[ "$USER" == "root" ]]; then
         python3-dev mono-complete openjdk-17-jdk openjdk-17-jre -y
 fi
 
+# setup repos and dotfile paths
 REPOS=$HOME/repos
+LAIDBACK=github.com/laidback
+DOTFILES=$REPOS/$LAIDBACK/dotfiles
+test -d $DOTFILES && rm -rf $DOTFILES && mkdir -p $DOTFILES
+git clone https://$LAIDBACK/dotfiles $DOTFILES
 
 # install golang
 if [[ "$USER" == "root" ]]; then
@@ -44,11 +49,7 @@ if [[ "$USER" == "root" ]]; then
 fi
 export PATH=$PATH:/usr/local/go/bin
 
-# setup dotfile repo
-LAIDBACK=github.com/laidback
-DOTFILES=$REPOS/$LAIDBACK/dotfiles
-test -d $DOTFILES && rm -rf $DOTFILES && mkdir -p $DOTFILES
-git clone https://$LAIDBACK/dotfiles $DOTFILES
+
 
 # zsh settings
 chsh -s /bin/zsh $USER
