@@ -47,8 +47,8 @@ export PATH=$PATH:/usr/local/go/bin
 # setup dotfile repo
 LAIDBACK=github.com/laidback
 DOTFILES=$REPOS/$LAIDBACK/dotfiles
-mkdir -p $REPOS/$LAIDBACK
-git clone https://$LAIDBACK/dotfiles $DOTFILES
+mkdir -p $DOTFILES
+git clone https://$DOTFILES $DOTFILES
 
 # zsh settings
 chsh -s /bin/zsh $USER
@@ -57,7 +57,7 @@ chsh -s /bin/zsh $USER
 curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh
 test -f $HOME/.zshrc && rm $HOME/.zshrc
 ln -s $DOTFILES/.zshrc $HOME/.zshrc
-ln -s $DOTFILES/oh-my-zsh-custom oh-my-zsh-custom
+ln -s $DOTFILES/oh-my-zsh-custom/themes oh-my-zsh-custom
 
 # install plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions \
@@ -86,7 +86,7 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 yes | vim +PlugUpdate +qall
 yes | vim +PluginInstall +qall
 
-gum spin --spinner dot --title "Vim installing plugions ..." -- sleep 20
+echo "Vim installing plugions ..." && sleep 20
 
 # install dotfiles
 test -f $HOME/.vimrc && rm $HOME/.vimrc
