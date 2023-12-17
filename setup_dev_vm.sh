@@ -32,9 +32,9 @@ if [[ "$USER" == "root" ]]; then
 fi
 
 # setup repos and dotfile paths
-REPOS=$HOME/repos
-LAIDBACK=github.com/laidback
-DOTFILES=$REPOS/$LAIDBACK/dotfiles
+export REPOS=$HOME/repos
+export LAIDBACK=github.com/laidback
+export DOTFILES=$REPOS/$LAIDBACK/dotfiles
 test -d $DOTFILES && rm -rf $DOTFILES && mkdir -p $DOTFILES
 git clone https://$LAIDBACK/dotfiles $DOTFILES
 
@@ -51,11 +51,16 @@ export PATH=$PATH:/usr/local/go/bin
 
 # zsh settings
 chsh -s /bin/zsh $USER
+
+# install oh-my-zsh
+test -f $HOME/.oh-my-zsh && rm $HOME/.oh-my-zsh
+curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh
+
+# install dotfiles
 test -f $HOME/.zshrc && rm $HOME/.zshrc
 ln -s $DOTFILES/.zshrc $HOME/.zshrc
 
-# install oh-my-zsh
-curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh
+test -d $HOME/oh-my-zsh-custom && rm -rf $HOME/oh-my-zsh-custom
 ln -s $DOTFILES/oh-my-zsh-custom/ $HOME/oh-my-zsh-custom/
 
 # install plugins
