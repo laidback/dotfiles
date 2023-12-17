@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 FPATH="/usr/local/share/zsh/site-functions:${FPATH}"
 HISTCONTROL=ignoreboth
