@@ -86,12 +86,14 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 yes | vim +PlugUpdate +qall
 yes | vim +PluginInstall +qall
 
+gum spin --spinner dot --title "Vim installing plugions ..." -- sleep 20
+
 # install dotfiles
 test -f $HOME/.vimrc && rm $HOME/.vimrc
 ln -s $DOTFILES/.vimrc $HOME/.vimrc
 
 # compile YouCompleteMe
-python3 .vim/bundle/YouCompleteMe/install.py --force-sudo
+python3 .vim/bundle/YouCompleteMe/install.py --all --force-sudo
 
 # install Github copilot
 git clone https://github.com/github/copilot.vim.git \
