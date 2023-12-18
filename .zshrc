@@ -134,14 +134,10 @@ fi
 
 # Tools setup
 export REPO_DIR="${HOME}/repos"
-export GITLAB_HOST="git.buts.hilti.cloud"
-export GITLAB_TOKEN=$(skate get git.buts.hilti.cloud)
-export JIRA_AUTH_TYPE=bearer
-export JIRA_API_TOKEN=$(skate get jira.hilti.com)
+export GITHUB_TOKEN=$(skate get github.com)
 export OPENAI_API_KEY=$(skate get openai.com)
 
 # Zsh addons and functions
-#source "$REPO_DIR/git.asmgmt.hilti.com/lukas.ciszewski/workflow-tools/wft.sh"
 #source "$REPO_DIR/github.com/laidback/workflow-tools/workflow-tools.sh"
 
 # Kube aliases
