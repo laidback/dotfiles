@@ -54,10 +54,10 @@ fi
 
 # Install go tools and packages for the kubernetes ecosystem
 # with kubectl, krew, kubetail, stern, kind and flux
+go install sigs.k8s.io/kind@latest
+go install github.com/stern/stern@latest
 if [[ "$USER" == "root" ]]; then
-    go install sigs.k8s.io/kind@latest
-    go install github.com/stern/stern@latest
-    curl -s https://fluxcd.io/install.sh | sudo bash
+    curl -s https://fluxcd.io/install.sh | sudo bash    
 fi
 
 # Install aws cli and autocompleter for zsh
