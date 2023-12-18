@@ -11,6 +11,7 @@
 
 # --- now on Linux
 if [[ "$USER" == "root" ]]; then
+    locale-gen en_US.UTF-8
     apt update -y && apt upgrade -y
     add-apt-repository ppa:git-core/ppa -y
     add-apt-repository ppa:jonathonf/vim -y
