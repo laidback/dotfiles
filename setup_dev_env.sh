@@ -19,7 +19,9 @@ if [[ "$USER" == "root" ]]; then
         tee /etc/apt/sources.list.d/docker.list > /dev/null
     apt-get update
     apt-get install docker-ce docker-ce-cli containerd.io -y
+    sudo groupadd docker
 fi
+sudo usermod -aG docker $USER
 
 # Install kubectl
 # https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
