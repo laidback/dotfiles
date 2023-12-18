@@ -66,15 +66,15 @@ test -d $ZSH_CUSTOM && rm -rf $ZSH_CUSTOM
 ln -s $DOTFILES/oh-my-zsh-custom/ $ZSH_CUSTOM
 
 # install plugins
-mkdir -p ${ZSH_CUSTOM:-~/oh-my-zsh-custom}/plugins
+mkdir -p ${ZSH_CUSTOM}/plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions \
-    ${ZSH_CUSTOM:-~/oh-my-zsh-custom}/plugins/zsh-autosuggestions
+    ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
 
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-    ${ZSH_CUSTOM:-~/oh-my-zsh-custom}/plugins/zsh-syntax-highlighting
+    ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
 
 git clone https://github.com/jeffreytse/zsh-vi-mode \
-    ${ZSH_CUSTOM:-~/oh-my-zsh-custom}/plugins/zsh-vi-mode
+    ${ZSH_CUSTOM}/plugins/zsh-vi-mode
 
 # install zoxide
 curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | zsh
