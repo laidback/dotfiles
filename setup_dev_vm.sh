@@ -50,20 +50,23 @@ fi
 export PATH=$PATH:/usr/local/go/bin
 
 # zsh settings
+echo "change shell to zsh"
 chsh -s /bin/zsh $USER
 
 # install oh-my-zsh
-test -f $HOME/.oh-my-zsh && rm $HOME/.oh-my-zsh
+test -d $HOME/.oh-my-zsh && rm -rf $HOME/.oh-my-zsh
 curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh
 
 # install dotfiles
 test -f $HOME/.zshrc && rm $HOME/.zshrc
 ln -s $DOTFILES/.zshrc $HOME/.zshrc
 
-test -d $HOME/oh-my-zsh-custom && rm -rf $HOME/oh-my-zsh-custom
-ln -s $DOTFILES/oh-my-zsh-custom/ $HOME/oh-my-zsh-custom/
+export ZSH_CUSTOM=$HOME/oh-my-zsh-custom
+test -d $ZSH_CUSTOM && rm -rf $ZSH_CUSTOM
+ln -s $DOTFILES/oh-my-zsh-custom/ $ZSH_CUSTOM
 
 # install plugins
+mkdir -p ${ZSH_CUSTOM:-~/oh-my-zsh-custom}/plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions \
     ${ZSH_CUSTOM:-~/oh-my-zsh-custom}/plugins/zsh-autosuggestions
 
@@ -77,7 +80,9 @@ git clone https://github.com/jeffreytse/zsh-vi-mode \
 curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | zsh
 
 # install starship
-curl -sS https://starship.rs/install.sh | sh -s -- --yes
+if [[ "$USER" == "root" ]]; then
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
+fi
 ln -s $DOTFILES/.config .config
 
 # vim settings
@@ -105,18 +110,18 @@ fi
 
 cat << EOF
     # manual setup needed!!!
-    # use vim and issue Copilot setup with device authentication
 
-    # manual setup needed for charm!!!
+    # invoke vim plugin managers
+    vim +PlugUpdate +qall
+    vim +PluginInstall +qall
+    
+    # use vim and issue Copilot setup with device authentication
+    # setup mods authentication via OPENAI_API_TOKEN
     skate set github.com https://github.com/settings/tokens
     skate set openai.com https://platform.openai.com/api-keys
-    export OPENAI_API_KEY=$(skate get lukas@api.openai.com)
-    
-    # invoke vim plugin managers
-    yes | vim +PlugUpdate +qall
-    yes | vim +PluginInstall +qall
+    export OPENAI_API_KEY=$(skate get openai.com)
+    export GITHUB_TOKEN=$(skate get github.com)
     
     # compile YouCompleteMe
     python3 $HOME/.vim/bundle/YouCompleteMe/install.py --all --force-sudo
 EOF
-
