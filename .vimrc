@@ -145,7 +145,9 @@ call vundle#end()
 " Plugins Start
 " -------------
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
+Plug 'preservim/nerdcommenter'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/syntastic'
 Plug 'mhinz/vim-startify'
 Plug 'christoomey/vim-tmux-navigator'
@@ -155,8 +157,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'stephpy/vim-yaml'
-Plug 'majutsushi/tagbar'
-Plug 'google/vim-jsonnet'
 Plug 'cespare/vim-toml', { 'branch': 'main' }
 Plug 'airblade/vim-gitgutter'
 Plug 'jreybert/vimagit'

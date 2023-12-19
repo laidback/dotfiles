@@ -58,6 +58,7 @@ fi
 # with kubectl, krew, kubetail, stern, kind and flux
 go install sigs.k8s.io/kind@latest
 go install github.com/stern/stern@latest
+go install gitlab.com/gitlab-org/cli/cmd/glab@main
 
 if [[ "$USER" == "root" ]]; then
     curl -s https://fluxcd.io/install.sh | sudo bash    

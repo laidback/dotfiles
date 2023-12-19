@@ -29,7 +29,8 @@ fi
 if [[ "$USER" == "root" ]]; then
     apt update && apt install zsh git vim \
         nodejs vim-nox build-essential cmake \
-        python3-dev mono-complete openjdk-17-jdk openjdk-17-jre -y
+        python3-dev mono-complete openjdk-17-jdk openjdk-17-jre \
+        jq xdg-utils -y
 fi
 
 # setup repos and dotfile paths
@@ -115,14 +116,15 @@ cat << EOF
     # invoke vim plugin managers
     vim +PlugUpdate +qall
     vim +PluginInstall +qall
-    
+
     # use vim and issue Copilot setup with device authentication
     # setup mods authentication via OPENAI_API_TOKEN
     skate set github.com https://github.com/settings/tokens
     skate set openai.com https://platform.openai.com/api-keys
     export OPENAI_API_KEY=$(skate get openai.com)
     export GITHUB_TOKEN=$(skate get github.com)
-    
+
     # compile YouCompleteMe
     python3 $HOME/.vim/bundle/YouCompleteMe/install.py --all --force-sudo
 EOF
+

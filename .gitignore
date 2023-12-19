@@ -6,6 +6,8 @@
 
 # Ignore .config/github-copilot directory
 .config/github-copilot/*
+.config/glab-cli/*
+.config/helm/*
 
 # Ignore oh-my-zsh-custom/plugins directory
 oh-my-zsh-custom/plugins/*

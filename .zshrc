@@ -6,6 +6,15 @@ HISTCONTROL=ignoreboth
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/.local/bin:$PATH"
 
+# export dotfiles variables
+export REPOS="${HOME}/repos"
+export LAIDBACK=github.com/laidback
+export DOTFILES=$REPOS/$LAIDBACK/dotfiles
+
+# export api key variables
+export GITHUB_TOKEN=$(skate get github.com)
+export OPENAI_API_KEY=$(skate get openai.com)
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 ZSH_THEME="lc-magic"
@@ -132,11 +141,6 @@ if [[ ${ret} -ne "200" ]]; then
     nohup charm serve < /dev/null > "${CHARM_SERVER_LOG}" 2>&1 &
 fi
 
-# Tools setup
-export REPO_DIR="${HOME}/repos"
-export GITHUB_TOKEN=$(skate get github.com)
-export OPENAI_API_KEY=$(skate get openai.com)
-
 # Zsh addons and functions
 #source "$REPO_DIR/github.com/laidback/workflow-tools/workflow-tools.sh"
 
@@ -166,5 +170,9 @@ eval "$(starship init zsh)"
 . <(charm completion zsh)
 . <(flux completion zsh)
 . <(stern --completion zsh)
+. <(testkube completion zsh)
+. <(glab completion -s zsh)
+
+#source $DOTFILES/workflow.sh
 
 # vim: ts=4 sw=4 sws=4 expandtab
