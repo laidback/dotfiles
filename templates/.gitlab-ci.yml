@@ -1,0 +1,219 @@
+---
+image: "$CI_REGISTRY_IMAGE/devtools:latest"
+
+stages:
+  - .pre
+  - build
+  - test
+  - package
+  - validate
+  - security
+  - release
+  - deploy
+  - dast
+  - .post
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_PIPELINE_SOURCE != 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+
+variables:
+  # build
+  RELEASE_VERSION: ${RELEASE_VERSION}
+  BUILD_NUMBER: ${CI_PIPELINE_ID}
+  BUILD_NAME: ${CI_PROJECT_NAME}
+  # package registry
+  PACKAGE_REGISTRY: "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic"
+  PACKAGE_NAME: "${BUILD_NAME}-${BUILD_VERSION}.zip"
+  PACKAGE_PATH: "${BUILD_NAME}/${BUILD_VERSION}/${PACKAGE_NAME}"
+  # container registry
+  CONTAINER_REGISTRY: "${CI_REGISTRY_IMAGE}"
+  CONTAINER_NAME: "${BUILD_NAME}:${BUILD_VERSION}"
+  CONTAINER_PATH: "${BUILD_NAME}/${CONTAINER_NAME}"
+  # templates
+  BUILD_PATH_TMPL: 'build/${CI_PROJECT_NAME}/$${RELEASE_VERSION}'
+
+# ----------------------------------------------------------------------
+# .pre
+# ----------------------------------------------------------------------
+semantic_version:
+  stage: .pre
+  image: alpine:latest
+  variables:
+    GITLAB_TOKEN: $SEMANTIC_RELEASE_TOKEN
+  before_script:
+    - apk update && apk add git nodejs npm
+  script:
+    - |
+      npx --yes \
+      --package @semantic-release/changelog \
+      --package @semantic-release/gitlab \
+      --package @semantic-release/exec \
+      --package @semantic-release/commit-analyzer \
+      --package conventional-changelog-conventionalcommits \
+      semantic-release --dry-run --no-ci > out.txt
+    - cat out.txt
+    - |
+      if [[ ! -f release.env ]]; then
+        echo "No release candidate"
+        exit 1
+      fi
+    - export $(cat release.env)
+    - env | grep -i release_version
+    - line=$(grep -n -m 1 "# $RELEASE_VERSION" out.txt | cut -f1 -d:)
+    - sed -n "$line,\$p" out.txt > changelog.md
+  artifacts:
+    paths:
+      - release.env
+      - changelog.md
+    reports:
+      dotenv: release.env
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - when: never
+
+# ----------------------------------------------------------------------
+# build
+# ----------------------------------------------------------------------
+build:
+  stage: build
+  image: quay.io/buildah/stable:v1.27
+  before_script:
+    - buildah login -u "$CI_REGISTRY_USER" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
+  script:
+    - buildah bud -t "${CI_REGISTRY_IMAGE}/devtools:${CI_COMMIT_SHA}" -f buildpack/devtools/Containerfile
+    - buildah push "${CI_REGISTRY_IMAGE}/devtools:${CI_COMMIT_SHA}"
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+# ----------------------------------------------------------------------
+# test
+# ----------------------------------------------------------------------
+test:
+  image: ${CI_REGISTRY_IMAGE}/devtools:${CI_COMMIT_SHA}
+  stage: test
+  script:
+    - echo "test" >> test.txt
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - test.txt
+  rules:
+    - if: $CI_COMMIT_BRANCH
+
+# ----------------------------------------------------------------------
+# package
+# ----------------------------------------------------------------------
+package:
+  stage: package
+  script:
+    - echo "zip the build from artifacts"
+    - touch result.zip
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - when: never
+
+# ----------------------------------------------------------------------
+# security, verification, e2e-testing, ...
+# ----------------------------------------------------------------------
+
+# ----------------------------------------------------------------------
+# release
+# ----------------------------------------------------------------------
+release:
+  stage: release
+  image: alpine:latest
+  variables:
+    GITLAB_TOKEN: $SEMANTIC_RELEASE_TOKEN
+  before_script:
+    - apk update && apk add git nodejs npm
+  script:
+    - |
+      npx --yes \
+      --package @semantic-release/changelog \
+      --package @semantic-release/gitlab \
+      --package @semantic-release/exec \
+      --package @semantic-release/commit-analyzer \
+      --package conventional-changelog-conventionalcommits \
+      semantic-release
+  artifacts:
+    paths:
+      - release.env
+      - changelog.md
+    reports:
+      dotenv: release.env
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - when: never
+
+release_devtools:
+  stage: release
+  needs:
+    - job: release
+      artifacts: true
+  before_script:
+    - buildah login -u "$CI_REGISTRY_USER" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
+  script:
+    - buildah pull "${CI_REGISTRY_IMAGE}/devtools:${CI_COMMIT_SHA}"
+    - buildah tag "${CI_REGISTRY_IMAGE}/devtools:${CI_COMMIT_SHA}" "${CI_REGISTRY_IMAGE}/devtools:${RELEASE_VERSION}"
+    - buildah push "${CI_REGISTRY_IMAGE}/devtools:${RELEASE_VERSION}"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - when: never
+
+release_chart:
+  image:
+    name: alpine/helm:latest
+    entrypoint: [""]
+  stage: release
+  needs:
+    - job: release_gitlab
+      artifacts: true
+  script:
+    - echo "$CI_REGISTRY_PASSWORD"
+      | helm registry login "${CI_REGISTRY}"
+        --username "$CI_REGISTRY_USER"
+        --password-stdin
+    - yq ".image.tag = \"${RELEASE_VERSION}\"" -i charts/wfm-web/values.yaml
+    - helm package
+      --version "${RELEASE_VERSION}"
+      --app-version "${RELEASE_VERSION}"
+      "charts/${CI_PROJECT_NAME}"
+    - helm push "wfm-web-${RELEASE_VERSION}.tgz" oci://${CI_REGISTRY_IMAGE}/charts
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - when: never
+
+# ----------------------------------------------------------------------
+# deploy
+# ----------------------------------------------------------------------
+pages:
+  stage: deploy
+  image: ${CI_REGISTRY_IMAGE}/devtools:latest
+  script:
+    - mkdir -p public
+    - pandoc README.md
+      --from markdown
+      --to html
+      --standalone
+      --output public/index.html
+    - cp README.md public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - when: never
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - echo "deploy ..."
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - when: never

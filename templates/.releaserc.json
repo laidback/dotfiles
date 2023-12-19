@@ -1,0 +1,60 @@
+{
+  "branches": [
+    "main",
+    {
+      "name": "feature/*",
+      "prerelease": "${name.replace('feature/', '')}"
+    },
+    {
+      "name": "fix/*",
+      "prerelease": "${name.replace('fix/', '')}"
+    },
+    {
+      "name": "hotfix/*",
+      "prerelease": "${name.replace('hotfix/', '')}"
+    }
+  ],
+  "tagFormat": "${version}",
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            { "type": "feat", "section": "Features" },
+            { "type": "fix", "section": "Bug Fixes" },
+            { "type": "chore", "hidden": true },
+            { "type": "docs", "hidden": true },
+            { "type": "style", "hidden": true },
+            { "type": "refactor", "hidden": true },
+            { "type": "perf", "hidden": true },
+            { "type": "test", "hidden": true }
+          ],
+          "issueUrlFormat": "https://hilti.atlassian.net/browse/{{id}}"
+        }
+      }
+    ],
+    "@semantic-release/release-notes-generator",
+    [
+        "@semantic-release/changelog",
+        {
+            "changelogFile": "changelog.md"
+        }
+    ],
+    [
+      "@semantic-release/gitlab",
+      {
+        "gitlabUrl": "https://git.buts.hilti.cloud/"
+      }
+    ],
+    [
+      "@semantic-release/exec",
+      {
+        "verifyReleaseCmd": "echo 'RELEASE_VERSION=${nextRelease.version}' > release.env",
+        "publishCmd": "echo 'RELEASE_VERSION=${nextRelease.version}' > release.env"
+      }
+    ]
+  ]
+}
+
