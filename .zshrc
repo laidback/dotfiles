@@ -172,6 +172,7 @@ eval "$(starship init zsh)"
 . <(stern --completion zsh)
 . <(testkube completion zsh)
 . <(glab completion -s zsh)
+. <(operator-sdk completion zsh)
 
 #source $DOTFILES/workflow.sh
 

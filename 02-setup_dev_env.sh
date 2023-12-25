@@ -61,16 +61,36 @@ go install github.com/stern/stern@latest
 go install gitlab.com/gitlab-org/cli/cmd/glab@main
 
 if [[ "$USER" == "root" ]]; then
-    curl -s https://fluxcd.io/install.sh | sudo bash    
+    curl -s https://fluxcd.io/install.sh | sudo bash
 fi
 
 # Install aws cli and autocompleter for zsh
-# https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install 
+# https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html#cliv2-linux-install
 if [[ "$USER" == "root" ]]; then
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     unzip awscliv2.zip
     sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
     rm -rf ./aws
+fi
+
+# Install kustomize
+# https://kubectl.docs.kubernetes.io/installation/kustomize/binaries/
+if [[ "$USER" == "root" ]]; then
+    curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+    mv kustomize /usr/local/bin
+fi
+
+# Install npm semantic-release
+# https://github.com/semantic-release/semantic-release
+if [[ "$USER" == "root" ]]; then
+    npm install --global --yes \                                                                                                                                                                                                (󱃾|kind-kind@kind-kind/) |  | laid@disco
+        @semantic-release/changelog \
+        @semantic-release/gitlab \
+        @semantic-release/exec \
+        @semantic-release/commit-analyzer \
+        @semantic-release/git \
+        conventional-changelog-conventionalcommits \
+        semantic-release
 fi
 
 # Install aws-azure-login
