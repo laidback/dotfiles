@@ -12,6 +12,7 @@ export LAIDBACK=github.com/laidback
 export DOTFILES=$REPOS/$LAIDBACK/dotfiles
 
 # export api key variables
+export GITLAB_TOKEN=$(skate get gitlab.com)
 export GITHUB_TOKEN=$(skate get github.com)
 export OPENAI_API_KEY=$(skate get openai.com)
 
@@ -106,46 +107,14 @@ if [ ! -S "$DOCKER_SOCK" ]; then
 fi
 
 # Charm suite configuration
-CHARM_SERVER_WORKDIR="$HOME/.charm"
-CHARM_SERVER_DATA_DIR=$CHARM_SERVER_WORKDIR/data
-CHARM_SERVER_LOG="$CHARM_SERVER_WORKDIR/charmd.log"
-CHARM_SERVER_HOST=localhost
-CHARM_SERVER_BIND_ADDRESS=0.0.0.0
-CHARM_SERVER_SSH_PORT=35353
-CHARM_SERVER_HTTP_PORT=35354
-CHARM_SERVER_STATS_PORT=35355
-CHARM_SERVER_HEALTH_PORT=35356
-CHARM_SERVER_USE_TLS=false
-CHARM_SERVER_TLS_KEY_FILE=
-CHARM_SERVER_TLS_CERT_FILE=
-CHARM_SERVER_PUBLIC_URL=
-CHARM_SERVER_ENABLE_METRICS=true # http://<CHARM_SERVER_HOST>:<CHARM_SERVER_STATS_PORT>/metrics
-CHARM_SERVER_USER_MAX_STORAGE=0
-
-# change the host for the charm-client
-export CHARM_HOST=localhost
-
-# check if charm is started and restart if necessary
-charm_health_url="${CHARM_SERVER_HOST}:${CHARM_SERVER_HEALTH_PORT}"
-
-ret=$(curl --location --silent \
-    --write "%{http_code}" \
-    --output "/dev/null" \
-    --request GET ${charm_health_url})
-
-if [[ ${ret} -ne "200" ]]; then
-    echo "charm seems to be dead, starting ..."
-    mkdir -pm o=,ug=rwx "$CHARM_SERVER_DATA_DIR"
-    chmod -R 755 "$CHARM_SERVER_WORKDIR"
-    touch "$CHARM_SERVER_LOG"
-    nohup charm serve < /dev/null > "${CHARM_SERVER_LOG}" 2>&1 &
-fi
+# Starts via systemd: /etc/systemd/system/charm.service
+# see: https://github.com/charmbracelet/charm/blob/main/systemd.md
 
 # Zsh addons and functions
 #source "$REPO_DIR/github.com/laidback/workflow-tools/workflow-tools.sh"
 
 # Kube aliases
-alias ktx="export KUBECONFIG=\$(find -maxdepth 1 -type f $HOME/.kube | gum choose)"
+alias ktx="export KUBECONFIG=\$(find $HOME/.kube -maxdepth 1 -type f | gum choose)"
 alias kns="kubectl config set-context --current=true \
     --namespace=\$(kubectl get namespace | cut -d ' ' -f1 | gum filter)"
 
@@ -165,15 +134,13 @@ autoload -U zrecompile && zrecompile -p ~/.{zcompdump,zshrc} > /dev/null 2>&1
 eval "$(starship init zsh)"
 
 # source completions for cli tools
-. <(kubectl completion zsh)
+#. <(kubectl completion zsh)
 . <(helm completion zsh)
 . <(charm completion zsh)
 . <(flux completion zsh)
-. <(stern --completion zsh)
-. <(testkube completion zsh)
+#. <(stern --completion zsh)
+#. <(testkube completion zsh)
 . <(glab completion -s zsh)
-. <(operator-sdk completion zsh)
-
-#source $DOTFILES/workflow.sh
+#. <(operator-sdk completion zsh)
 
 # vim: ts=4 sw=4 sws=4 expandtab
