@@ -89,25 +89,12 @@ export KUBECONFIG="${HOME}/.kube/kind"
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Docker startup
-DOCKER_DISTRO="Ubuntu-20.04"
-DOCKER_DIR="/var/run/docker"
-DOCKER_LOG="$DOCKER_DIR/dockerd.log"
-DOCKER_SOCK="/var/run/docker.sock"
-
-## set docker host
-export DOCKER_HOST="unix://$DOCKER_SOCK"
-
-if [ ! -S "$DOCKER_SOCK" ]; then
-   echo "docker seems to be dead, starting ..."
-   sudo mkdir -pm o=,ug=rwx "$DOCKER_DIR"
-   sudo chgrp -R docker "$DOCKER_DIR"
-   sudo chmod -R 777 "$DOCKER_DIR"
-   sudo touch "$DOCKER_LOG"
-   sudo -b nohup dockerd < /dev/null > $DOCKER_LOG &
-fi
+# Socket via systemd: /etc/systemd/system/docker.socket
+# Service via systemd: /etc/systemd/system/docker.service
+# see: https://github.com/moby/moby/blob/master/contrib/init/systemd/docker.service
 
 # Charm suite configuration
-# Starts via systemd: /etc/systemd/system/charm.service
+# Service via systemd: /etc/systemd/system/charm.service
 # see: https://github.com/charmbracelet/charm/blob/main/systemd.md
 
 # Zsh addons and functions
