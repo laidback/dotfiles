@@ -131,3 +131,4 @@ eval "$(starship init zsh)"
 #. <(operator-sdk completion zsh)
 
 # vim: ts=4 sw=4 sws=4 expandtab
+. <(k8sgpt completion zsh)

@@ -143,6 +143,10 @@ apt update -y && apt install charm skate mods gum glow
 charm completion zsh > "${fpath[1]}/_charm"
 ```
 
+### Add Charm to Systemd
+
+see: https://github.com/charmbracelet/charm/blob/main/systemd.md
+
 ## Step 14 - Manual Setup
 
 Perform additional manual setup, such as updating Vim plugins, setting up mods authentication, and compiling YouCompleteMe:
@@ -161,6 +165,7 @@ python3 $HOME/.vim/bundle/YouCompleteMe/install.py --all --force-sudo
 - Ensure you have `root` user access.
 
 ### Docker Installation
+
 1. Update the apt package index and install the appropriate dependencies.
 ```
    apt-get update
@@ -183,6 +188,10 @@ python3 $HOME/.vim/bundle/YouCompleteMe/install.py --all --force-sudo
 ```
    sudo usermod -aG docker $USER
 ```
+
+### Add Docker to Systemd
+
+see: https://github.com/moby/moby/blob/master/contrib/init/systemd
 
 ### Kubectl Installation
 1. Download kubectl's GPG key and add the repository to apt sources.
@@ -247,3 +256,11 @@ python3 $HOME/.vim/bundle/YouCompleteMe/install.py --all --force-sudo
    npm install -g aws-azure-login
 ```
 
+INSTALL additionally:
+* mullvad - client and cli
+* IPFS
+* iperf3 - for network perf measuring
+* shadowsocks - for tunneling
+
+README:
+* https://proto.school/

@@ -5,7 +5,6 @@ $custom \
 $env_var
 $character
 """
-#$env_var
 
 right_format = """
 $kubernetes | \
@@ -81,10 +80,4 @@ symbol = '\([ ](orange bold)'
 command = 'echo "$symbol|$GITLAB_REPO|$GITLAB_GROUP)"'
 detect_folders = [".git"]
 description = 'gitlab module'
-
-#[custom.REPO_DIR]
-#symbol = '[ ](orange bold)'
-#command = 'echo "$symbol"'
-#when = 'test "${PWD}" != "${PWD##$REPO_DIR}"'
-#description = 'test module'
 

@@ -19,3 +19,6 @@ vim/plugged/*
 # Ignore all structures in venv directory
 venvs/*
 
+.config/k8sgpt
+.config/weave*
+.config/*
