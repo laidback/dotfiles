@@ -105,6 +105,9 @@ alias ktx="export KUBECONFIG=\$(find $HOME/.kube -maxdepth 1 -type f | gum choos
 alias kns="kubectl config set-context --current=true \
     --namespace=\$(kubectl get namespace | cut -d ' ' -f1 | gum filter)"
 
+# git aliases
+alias ladog="git log --graph --pretty="%C(yellow) Hash: %h %C(blue)Date: %ad %C(red) Message: %s " --date=human"
+
 ### alcoholics
 # Aliases
 alias pwd="pwd -P"
