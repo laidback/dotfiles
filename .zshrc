@@ -106,7 +106,7 @@ alias kns="kubectl config set-context --current=true \
     --namespace=\$(kubectl get namespace | cut -d ' ' -f1 | gum filter)"
 
 # git aliases
-alias ladog="git log --graph --pretty="%C(yellow) Hash: %h %C(blue)Date: %ad %C(red) Message: %s " --date=human"
+alias ladog='git log --graph --pretty="%C(yellow) Hash: %h %C(blue)Date: %ad %C(red) Message: %s " --date=human'
 
 ### alcoholics
 # Aliases
