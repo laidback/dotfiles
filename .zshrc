@@ -106,7 +106,9 @@ alias kns="kubectl config set-context --current=true \
     --namespace=\$(kubectl get namespace | cut -d ' ' -f1 | gum filter)"
 
 # git aliases
-alias ladog='git log --graph --pretty="%C(yellow) Hash: %h %C(blue)Date: %ad %C(red) Message: %s " --date=human'
+alias glog='git log --graph --pretty="%C(yellow) Hash: %h %C(blue)Date: %ad %C(red) Message: %s " --date=human'
+alias gap='git add . && git commit -m"$(gum input --prompt "commit message: ")" && git push'
+alias gcc='git checkout -B $(gum input --prompt "branch name: ") && git add . && git commit -m"$(gum input --prompt "commit message: ")"'
 
 ### alcoholics
 # Aliases
