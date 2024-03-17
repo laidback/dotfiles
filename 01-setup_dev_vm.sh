@@ -13,6 +13,7 @@
 if [[ "$USER" == "root" ]]; then
     locale-gen en_US.UTF-8
     apt update -y && apt upgrade -y
+    apt install software-properties-common -y
     add-apt-repository ppa:git-core/ppa -y
     add-apt-repository ppa:jonathonf/vim -y
 fi
