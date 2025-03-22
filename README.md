@@ -1,5 +1,32 @@
 # Installation Guide
 
+## VSCode VIM stuff
+
+This is really good news, although not in a file, i can present my VSCode keybindings.json
+
+```
+// Place your key bindings in this file to override the defaults
+[{
+    "key": "ctrl+l",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "explorerViewletFocus"
+},
+{
+    "key": "ctrl+k",
+    "command": "workbench.action.focusActiveEditorGroup",
+},
+{
+    "key": "ctrl+j",
+    "command": "workbench.action.terminal.focus",
+    "when": "terminalFocus"
+},
+{
+    "key": "ctrl+z",
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus"
+}]
+```
+
 ## Step 1 - Setup WSL
 
 Unregister your current Ubuntu distribution and reinstall Ubuntu on the Windows Subsystem for Linux (WSL):
