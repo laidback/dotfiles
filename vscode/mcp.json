@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "atlassian": {
+      "command": "node",
+      "args": [],
+      "url": "https://mcp.atlassian.com/v1/sse",
+      "transport": "sse"
+    }
+  }
+}

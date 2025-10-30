@@ -1,24 +1,57 @@
-# Ignore temp files
+# Temp files
 *.swp
 *.swo
 *.old
 *.bak
+*~
+.DS_Store
 
-# Ignore .config/github-copilot directory
-.config/github-copilot/*
-.config/glab-cli/*
-.config/helm/*
+# Shell history
+.zsh_history
+.bash_history
+.zcompdump*
 
-# Ignore oh-my-zsh-custom/plugins directory
+# VS Code - Keep templates, ignore personal configs
+vscode/*.local.*
+vscode/settings.local.json
+vscode/*-local.json
+
+# Keep these VS Code templates
+!vscode/settings.json
+!vscode/keybindings.json
+!vscode/mcp.json
+
+# Generated configs
+.config/github-copilot/
+.config/glab-cli/
+.config/helm/
+.config/k8sgpt/
+.config/weave*/
+
+# Keep specific configs
+!.config/starship.toml
+!.config/mods/
+
+# Zsh plugins (downloaded by setup scripts)
 oh-my-zsh-custom/plugins/*
+!oh-my-zsh-custom/plugins/.gitkeep
+!oh-my-zsh-custom/themes/
 
-# Ignore vim plugin directory
+# Vim plugins (managed by Vundle/vim-plug)
+.vim/
 vim/plugged/*
-!vim/plugged/.gitkeep
 
-# Ignore all structures in venv directory
-venvs/*
+# Secrets
+*.pem
+*.key
+*.cert
+.env*
+secrets.yml
+credentials.json
 
-.config/k8sgpt
-.config/weave*
-.config/*
+# Build artifacts
+node_modules/
+*.pyc
+__pycache__/
+*.log
+*.code-workspace

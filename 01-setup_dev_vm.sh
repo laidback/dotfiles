@@ -1,15 +1,32 @@
 #!/usr/bin/env bash
-# Setup WSL
-
-# on windows show all distros
-# wsl.exe --list
-# unregister default Ubuntu
-# wsl.exe --unregister Ubuntu
-
-# install Ubuntu again
-# wsl.exe --list
-
-# --- now on Linux
+#
+# Script: 01-setup_dev_vm.sh
+# Description: Initial development VM/environment setup
+# Purpose: Install base system packages, shell configuration, and development tools
+# Platform: WSL2, Ubuntu Linux, Debian-based systems
+# Requirements: Root access for system-level installations
+#
+# Usage:
+#   sudo ./01-setup_dev_vm.sh
+#
+# What this script does:
+#   - Sets up locale and system repositories
+#   - Installs Node.js 21 via NodeSource
+#   - Installs base packages (zsh, git, vim, Java 21, Python, etc.)
+#   - Clones dotfiles repository
+#   - Installs and configures Golang 1.21.5
+#   - Sets up Zsh with Oh-My-Zsh
+#   - Installs Zsh plugins (autosuggestions, syntax-highlighting, vi-mode)
+#   - Installs zoxide and starship prompt
+#   - Configures Vim with plugin managers and GitHub Copilot
+#   - Installs Charm tools (gum, mods, skate, glow)
+#
+# WSL Setup (Windows):
+#   wsl.exe --list                    # Show all distros
+#   wsl.exe --unregister Ubuntu       # Unregister default Ubuntu
+#   wsl.exe --install Ubuntu          # Install Ubuntu again
+#
+# --- Main Setup Script ---
 if [[ "$USER" == "root" ]]; then
     locale-gen en_US.UTF-8
     apt update -y && apt upgrade -y
@@ -30,7 +47,7 @@ fi
 if [[ "$USER" == "root" ]]; then
     apt update && apt install zsh git vim \
         nodejs vim-nox build-essential cmake \
-        python3-dev mono-complete openjdk-17-jdk openjdk-17-jre \
+        python3-dev mono-complete openjdk-21-jdk openjdk-21-jre \
         jq xdg-utils -y
 fi
 
@@ -44,11 +61,11 @@ git clone https://$LAIDBACK/dotfiles $DOTFILES
 # install golang
 if [[ "$USER" == "root" ]]; then
     rm -rf /usr/local/go
-    GOPATH=$REPOS/go
+    export GOPATH=$REPOS/go
     curl -sLO https://go.dev/dl/go1.21.5.linux-amd64.tar.gz
     tar -C /usr/local -xzf go1.21.5.linux-amd64.tar.gz
     rm go1.21.5.linux-amd64.tar.gz
-    GOROOT=/usr/local/go
+    export GOROOT=/usr/local/go
 fi
 export PATH=$PATH:/usr/local/go/bin
 
@@ -108,7 +125,8 @@ if [[ "$USER" == "root" ]]; then
     curl -fsSL https://repo.charm.sh/apt/gpg.key | gpg --dearmor -o /etc/apt/keyrings/charm.gpg
     echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | tee /etc/apt/sources.list.d/charm.list
     apt update -y && apt install charm skate mods gum glow
-    charm completion zsh > "${fpath[1]}/_charm"
+    # Create charm completion (run manually after first shell load)
+    # charm completion zsh > /usr/local/share/zsh/site-functions/_charm
 fi
 
 cat << EOF

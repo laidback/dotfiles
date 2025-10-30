@@ -1,7 +1,32 @@
 #!/usr/bin/env bash
-# Setup Development Environment
-
-# Add Docker's official GPG key:
+#
+# Script: 02-setup_dev_env.sh
+# Description: Development environment setup (DevOps tools)
+# Purpose: Install Docker, Kubernetes tools, cloud CLIs, and build tools
+# Platform: WSL2, Ubuntu Linux, Debian-based systems
+# Requirements: Root access for some installations, user context for others
+#
+# Usage:
+#   ./02-setup_dev_env.sh
+#
+# What this script does:
+#   - Installs Docker CE with containerd
+#   - Configures Docker group permissions
+#   - Installs kubectl (Kubernetes CLI)
+#   - Installs Helm package manager
+#   - Installs krew (kubectl plugin manager)
+#   - Installs Go-based tools (kind, stern, glab)
+#   - Installs Flux CD for GitOps
+#   - Installs AWS CLI v2
+#   - Installs kustomize for Kubernetes manifests
+#   - Installs semantic-release tools via npm
+#   - Installs aws-azure-login for Azure SSO
+#
+# Prerequisites:
+#   - Run 01-setup_dev_vm.sh first
+#   - Golang and Node.js must be installed
+#
+# --- Docker Installation ---
 if [[ "$USER" == "root" ]]; then
 
     # Add Docker's official GPG key:
@@ -83,7 +108,7 @@ fi
 # Install npm semantic-release
 # https://github.com/semantic-release/semantic-release
 if [[ "$USER" == "root" ]]; then
-    npm install --global --yes \                                                                                                                                                                                                (󱃾|kind-kind@kind-kind/) |  | laid@disco
+    npm install --global --yes \
         @semantic-release/changelog \
         @semantic-release/gitlab \
         @semantic-release/exec \

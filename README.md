@@ -2,7 +2,99 @@
 
 ## VSCode VIM stuff
 
-This is really good news, although not in a file, i can present my VSCode keybindings.json
+````markdown
+# Personal Dotfiles
+
+> Lean CLI development environment - Your personal keychain to productive terminal work
+
+## What This Is
+
+Personal dotfiles for cross-platform CLI development (macOS/WSL2/Linux). Foundation for the [DevOps Copilot Framework](https://git.buts.hilti.cloud/ci24/devops-copilot).
+
+**Core Philosophy**: Everything you need in a container. The Dockerfile is the single source of truth.
+
+## Quick Start
+
+```bash
+# Clone
+export REPOS="${HOME}/repos"
+export LAIDBACK="github.com/laidback"
+mkdir -p "${REPOS}/${LAIDBACK}"
+git clone "https://${LAIDBACK}/dotfiles" "${REPOS}/${LAIDBACK}/dotfiles"
+cd "${REPOS}/${LAIDBACK}/dotfiles"
+
+# Setup (requires root)
+sudo ./01-setup_dev_vm.sh      # Base: shell, vim, languages
+./02-setup_dev_env.sh          # DevOps: docker, k8s, cloud tools
+
+# Or use Docker
+docker build -t dotfiles .
+docker run -it dotfiles
+```
+
+## What's Inside
+
+**Core Files**:
+- `.zshrc` - Zsh config with vi-mode, starship, smart completions
+- `.vimrc` - Vim config with plugins and GitHub Copilot
+- `.wslconfig` - WSL2 tuning (16GB RAM, 2 CPUs)
+- `Dockerfile` - Complete dev environment in a container
+
+**Shell** (Zsh):
+- Starship prompt + zoxide + vi-mode (`jk` to escape)
+- Auto-suggestions, syntax highlighting
+- kubectl, helm, flux completions
+- Git aliases: `gap` (add/commit/push), `gcc` (branch/commit), `glog` (pretty log)
+
+**Vim**:
+- Vundle + vim-plug for plugins
+- NERDTree, syntastic, vim-fugitive, vim-airline
+- GitHub Copilot ready
+- Leader key: `<Space>`
+
+**DevOps Stack**:
+- Docker, kubectl, helm, krew, flux, kustomize
+- kind, stern, glab (GitLab CLI)
+- AWS CLI with completions
+- Go 1.21.5, Node.js 21, Java 21 LTS, Python 3
+
+**AI Tools**:
+- Charm: gum, mods, skate, glow
+- GitHub Copilot (vim + VS Code)
+- Custom chatmodes in `github/` directory## VS Code (Private Config)
+
+**Note**: VS Code settings in `vscode/` are templates. Keep your personal settings private:
+
+```bash
+# Option 1: Git ignore your personal VS Code config
+echo "vscode/settings.local.json" >> .git/info/exclude
+
+# Option 2: Use a private repo for VS Code settings
+# Keep vscode/ templates here, actual config in private repo
+```
+
+**VS Code Integration**:
+- Full `.vimrc` support via vim extension
+- GitHub Copilot + MCP (Model Context Protocol) enabled
+- Kubernetes tools with macOS ARM64 paths pre-configured
+- Terminal auto-approve for git/npm commands
+
+## Manual Steps (After Automated Setup)
+
+```bash
+# 1. Vim plugins
+vim +PlugUpdate +qall && vim +PluginInstall +qall
+
+# 2. GitHub Copilot (in vim)
+# :Copilot setup
+
+# 3. API keys (using Charm skate)
+skate set github.com <YOUR_TOKEN>
+skate set openai.com <YOUR_KEY>
+
+# 4. YouCompleteMe (optional)
+python3 ~/.vim/bundle/YouCompleteMe/install.py --all
+```
 
 ```
 // Place your key bindings in this file to override the defaults
@@ -283,11 +375,210 @@ see: https://github.com/moby/moby/blob/master/contrib/init/systemd
    npm install -g aws-azure-login
 ```
 
-INSTALL additionally:
-* mullvad - client and cli
-* IPFS
-* iperf3 - for network perf measuring
-* shadowsocks - for tunneling
+## File Structure
 
-README:
-* https://proto.school/
+```
+dotfiles/
+├── Dockerfile                  # Complete dev environment
+├── 01-setup_dev_vm.sh         # Base: zsh, vim, Go, Node, Java
+├── 02-setup_dev_env.sh        # DevOps: docker, k8s, cloud
+├── .zshrc                     # Shell config
+├── .vimrc                     # Vim config
+├── .wslconfig                 # WSL2 tuning
+├── vscode/                    # VS Code templates (keep private!)
+├── github/                    # AI chatmodes & instructions
+└── oh-my-zsh-custom/          # Shell theme & customizations
+```
+
+## Keeping VS Code Settings Private
+
+Your VS Code config often contains personal tokens, workspace paths, and preferences. Here's how to handle it:
+
+### Option 1: Git Info Exclude (Recommended)
+```bash
+# Keep in repo but don't commit changes
+echo "vscode/settings.local.json" >> .git/info/exclude
+echo "vscode/*.local.*" >> .git/info/exclude
+```
+
+### Option 2: Separate Private Repo
+```bash
+# Keep dotfiles public, VS Code settings private
+# In dotfiles: Only templates
+# In private repo: Your actual settings
+```
+
+### Option 3: Environment-Specific Configs
+```bash
+vscode/
+├── settings.json              # Template (commit this)
+├── settings.local.json        # Your personal settings (gitignored)
+└── keybindings.json           # Safe to commit (no secrets)
+```
+
+## The Dockerfile Approach
+
+Everything in the setup scripts can run in a container:
+
+```dockerfile
+# See Dockerfile for full setup
+docker build -t dotfiles .
+docker run -it dotfiles
+
+# Your entire dev environment, portable
+```
+
+**Why containerize?**:
+- Consistent environment across machines
+- Test setup scripts safely
+- Share dev environment with team
+- Fast machine onboarding
+
+## Advanced Configuration
+
+### Cross-Platform Support
+
+#### macOS-specific
+
+```bash
+# Colima for Docker (macOS alternative to Docker Desktop)
+export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
+
+# Homebrew-managed Go installation
+export GOROOT=$(brew --prefix golang)/libexec
+```
+
+#### WSL2-specific
+
+- Memory: 16GB allocated (`.wslconfig`)
+- Networking: NAT mode with DNS tunneling
+- Integration: systemd boot commands for KVM permissions
+
+### Kubernetes Workflows
+
+```bash
+# Switch between kubeconfig files interactively
+ktx
+
+# Switch namespace in current context
+kns
+
+# View logs across multiple pods
+stern <pod-name-pattern>
+
+# Quick cluster creation with kind
+kind create cluster --name dev
+```
+
+### Git Workflows
+
+```bash
+# Add all, commit with prompt, and push
+gap
+
+# Create branch, add all, commit with prompts
+gcc
+
+# Pretty git log with colors
+glog
+```
+
+## Manual Setup Steps
+
+After automated installation, perform these steps:
+
+### 1. Vim Plugins
+
+```bash
+vim +PlugUpdate +qall
+vim +PluginInstall +qall
+```
+
+### 2. GitHub Copilot Authentication
+
+```bash
+vim
+# Inside vim, run: :Copilot setup
+```
+
+### 3. API Keys Setup (using Charm Skate)
+
+```bash
+skate set github.com <YOUR_GITHUB_TOKEN>
+skate set openai.com <YOUR_OPENAI_KEY>
+
+export GITHUB_TOKEN=$(skate get github.com)
+export OPENAI_API_KEY=$(skate get openai.com)
+```
+
+### 4. YouCompleteMe Compilation
+
+```bash
+python3 ~/.vim/bundle/YouCompleteMe/install.py --all --force-sudo
+```
+
+### 5. Systemd Integration (Optional)
+
+- [Charm systemd setup](https://github.com/charmbracelet/charm/blob/main/systemd.md)
+- [Docker systemd setup](https://github.com/moby/moby/blob/master/contrib/init/systemd)
+
+## Repository Structure
+
+```
+dotfiles/
+├── 01-setup_dev_vm.sh         # Base system + shell setup
+├── 02-setup_dev_env.sh         # Development tools installation
+├── .zshrc                      # Zsh configuration
+├── .vimrc                      # Vim configuration
+├── .wslconfig                  # WSL2 settings
+├── .config/                    # Application configs
+│   └── starship.toml          # Starship prompt config
+├── .github/                    # GitHub-specific configs
+│   └── copilot-instructions.md # AI coding guidelines
+├── github/                     # AI chatmodes & instructions
+│   ├── chatmodes/             # AI persona definitions
+│   ├── instructions/          # Coding standards
+│   └── prompts/               # Task templates
+├── oh-my-zsh-custom/          # Zsh customizations
+│   ├── plugins/               # Additional plugins
+│   └── themes/                # Custom themes
+├── templates/                  # Project templates
+│   ├── .gitlab-ci.yml         # CI/CD template
+│   └── .releaserc.json        # Semantic release config
+└── vscode/                     # VS Code templates
+    ├── settings.json          # Editor preferences
+    └── keybindings.json       # Custom keybindings
+```
+
+## Integration with DevOps Copilot
+
+This repository serves as the base configuration layer for the [DevOps Copilot Framework](https://git.buts.hilti.cloud/ci24/devops-copilot), providing:
+
+- **Consistent Environment**: Shared shell, editor, and tool configurations
+- **AI Instructions**: Reusable chatmodes and coding standards
+- **Automation Scripts**: Template-based repository initialization
+- **Tool Chain**: Common DevOps utilities across all projects
+
+## Additional Tools (Optional)
+
+For enhanced security and networking capabilities:
+
+- **Mullvad VPN**: Client and CLI for secure connections
+- **IPFS**: Distributed file system
+- **iperf3**: Network performance measurement
+- **shadowsocks**: Secure tunneling
+
+## Resources
+
+- [Oh My Zsh](https://ohmyz.sh/)
+- [Starship Prompt](https://starship.rs/)
+- [GitHub Copilot](https://github.com/features/copilot)
+- [Charm Tools](https://charm.sh/)
+- [Proto School](https://proto.school/) - Learn web3 protocols
+
+---
+
+**License**: MIT
+**Maintained by**: [@laidback](https://github.com/laidback)
+
+````

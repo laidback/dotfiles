@@ -4,17 +4,11 @@ HISTCONTROL=ignoreboth
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export PATH="$HOME/.local/bin:$PATH"
 
 # export dotfiles variables
 export REPOS="${HOME}/repos"
 export LAIDBACK=github.com/laidback
 export DOTFILES=$REPOS/$LAIDBACK/dotfiles
-
-# export api key variables
-export GITLAB_TOKEN=$(skate get gitlab.com)
-export GITHUB_TOKEN=$(skate get github.com)
-export OPENAI_API_KEY=$(skate get openai.com)
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -62,7 +56,7 @@ export EDITOR='vim'
 
 # Homes, bins and paths
 # Golang
-export GOROOT="/usr/local/go"
+export GOROOT=$(brew --prefix golang)/libexec
 export GOPATH="$HOME/repos/go"
 
 # PATH
@@ -74,34 +68,17 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 #export JAVA_HOME="/usr/lib/jvm/temurin-17-jdk-amd64"
 #export PATH="$PATH:${JAVA_HOME}/bin"
 
-# Android
-export ANDROID_HOME=/usr/lib/android-sdk
-export PATH=${PATH}:${ANDROID_HOME}/emulator
-export PATH=${PATH}:${ANDROID_HOME}/tools
-export PATH=${PATH}:/usr/lib/platform-tools
-export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
-export PATH="${PATH}:${HOME}/.krew/bin"
-
 # Kubernetes PATH settings
 export KUBECONFIG="${HOME}/.kube/kind"
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Docker startup
-# Socket via systemd: /etc/systemd/system/docker.socket
-# Service via systemd: /etc/systemd/system/docker.service
-# see: https://github.com/moby/moby/blob/master/contrib/init/systemd/docker.service
-
-# Charm suite configuration
-# Service via systemd: /etc/systemd/system/charm.service
-# see: https://github.com/charmbracelet/charm/blob/main/systemd.md
-
-# Zsh addons and functions
-#source "$REPO_DIR/github.com/laidback/workflow-tools/workflow-tools.sh"
+# Docker via Colima
+export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 
 # Kube aliases
-alias ktx="export KUBECONFIG=\$(find $HOME/.kube -maxdepth 1 -type f | gum choose)"
+alias ktx="export KUBECONFIG=\$(find $HOME/.kube -maxdepth 1 -type f | sort | gum choose)"
 alias kns="kubectl config set-context --current=true \
     --namespace=\$(kubectl get namespace | cut -d ' ' -f1 | gum filter)"
 
@@ -114,7 +91,17 @@ alias gcc='git checkout -B $(gum input --prompt "branch name: ") && git add . &&
 # Aliases
 alias pwd="pwd -P"
 alias wsl="wsl.exe"
-alias wish="wishlist"
+
+# source completions for cli tools
+. <(helm completion zsh)
+. <(flux completion zsh)
+#. <(stern --completion zsh)
+. <(glab completion -s zsh)
+#. <(operator-sdk completion zsh)
+#. <(k8sgpt completion zsh)
+jira completion zsh > "${fpath[1]}/_jira"
+
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
 # Performance -----------------------------------------------------------------
 # recompile if needed
@@ -125,15 +112,5 @@ autoload -U zrecompile && zrecompile -p ~/.{zcompdump,zshrc} > /dev/null 2>&1
 
 eval "$(starship init zsh)"
 
-# source completions for cli tools
-#. <(kubectl completion zsh)
-. <(helm completion zsh)
-. <(charm completion zsh)
-. <(flux completion zsh)
-#. <(stern --completion zsh)
-#. <(testkube completion zsh)
-. <(glab completion -s zsh)
-#. <(operator-sdk completion zsh)
-
 # vim: ts=4 sw=4 sws=4 expandtab
-. <(k8sgpt completion zsh)
+

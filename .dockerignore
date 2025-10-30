@@ -1,0 +1,11 @@
+# Don't copy these into the container
+.git
+.DS_Store
+*.swp
+*.swo
+node_modules
+.vscode
+.idea
+.env*
+*.log
+vscode/*.local.*

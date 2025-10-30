@@ -103,7 +103,7 @@ set iskeyword-=#            " '#' is an end of word designator
 set iskeyword-=-            " '-' is an end of word designator
 set iskeyword-=_            " '_' is an end of word designator
 
-nnoremap <C-h> <C-w>h
+nnoremap <C-h> <C-w>w
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
@@ -123,8 +123,8 @@ nmap <Leader>bl :ls<CR>
 nmap <Leader>ww :w<CR>
 nmap <Leader>qq :q<CR>
 
-nmap <silent> <leader>/ :nohlsearch<CR>
-nmap <silent> <leader>/ :set invhlsearch<CR>
+nmap <silent> <Leader>/ :nohlsearch<CR>
+nmap <silent> <Leader>/ :set invhlsearch<CR>
 
 " For when you forget to sudo.. Really Write the file.
 cmap w!! w !sudo tee % >/dev/null
@@ -167,6 +167,7 @@ Plug 'vim-scripts/xoria256.vim'
 Plug 'jordwalke/flatlandia'
 Plug 'cocopon/iceberg.vim'
 call plug#end()
+
 " --- Plugins End
 
 " Hunk-add and hunk-revert for chunk staging

@@ -1,0 +1,87 @@
+{
+    "vs-kubernetes": {
+        "vscode-kubernetes.helm-path-mac": "/Users/ciszluk/.vs-kubernetes/tools/helm/darwin-arm64/helm",
+        "vscode-kubernetes.kubectl-path-mac": "/Users/ciszluk/.vs-kubernetes/tools/kubectl/kubectl",
+        "vscode-kubernetes.minikube-path-mac": "/Users/ciszluk/.vs-kubernetes/tools/minikube/darwin-arm64/minikube"
+    },
+    "vim.vimrc.enable": true,
+    "vim.vimrc.path": "$HOME/.vimrc",
+    "terminal.integrated.mouseWheelZoom": true,
+    "vim.leader": "<space>",
+    "vim.easymotion": true,
+    "vim.commandLineModeKeyBindingsNonRecursive": [],
+    "vim.foldfix": true,
+    "docker.extension.dockerEngineAvailabilityPrompt": false,
+    "git.autofetch": true,
+    "chat.agent.enabled": true,
+    "chat.mcp.discovery.enabled": {
+        "claude-desktop": true,
+        "windsurf": true,
+        "cursor-global": true,
+        "cursor-workspace": true
+    },
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "chat.mcp.serverSampling": {
+        "Global in Code: atlassian": {
+            "allowedModels": [
+                "github.copilot-chat/claude-sonnet-4",
+                "github.copilot-chat/gpt-4.1"
+            ]
+        }
+    },
+    "go.toolsManagement.autoUpdate": true,
+    "python.analysis.typeCheckingMode": "strict",
+    "docker.extension.enableComposeLanguageServer": false,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": true,
+        "markdown": true,
+        "scminput": false
+    },
+    "chat.mcp.access": "all",
+    "chat.tools.terminal.autoApprove": {
+        "chmod": true,
+        "git pull": true,
+        "git checkout": true,
+        "./shell/update-workspace-instructions.sh": true,
+        "/tmp/script_output.log": true,
+        "./shell/base-shell-script.sh update-workspace-manifest --verbose --dry-run": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "npm install": true,
+        "mv": true,
+        "./port-automation.sh": true,
+        "python3": true,
+        "/dev/null": true,
+        "npm init": true,
+        "npx": true,
+        "make": true
+    },
+    "workbench.settings.applyToAllProfiles": [
+        "chat.tools.terminal.autoApprove"
+    ],
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "terminal.integrated.suggest.enabled": true,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "terminal.integrated.fontSize": 11
+}
